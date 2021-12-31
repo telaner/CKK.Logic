@@ -8,13 +8,13 @@ namespace CKK.Logic.Models
 {
     public class Product
     {
-        private int productID;
+        private int productId;
         private string productName;
         private decimal productPrice;
 
-        public Product(int ID, string Name, decimal Price)
+        public Product(int Id, string Name, decimal Price)
         {
-            productID = ID;
+            productId = Id;
             productName = Name;
             productPrice = Price;
         }
@@ -22,13 +22,13 @@ namespace CKK.Logic.Models
         public int GetID()
 
         {
-            return productID;
+            return productId;
         }
 
         public void SetID(int ID)
 
         {
-            productID=ID;
+            productId = ID;
         }
 
         public string GetName()
@@ -40,7 +40,7 @@ namespace CKK.Logic.Models
         public void SetName(string Name)
 
         {
-            productName=Name;
+            productName = Name;
         }
 
         public decimal GetPrice()
@@ -52,7 +52,7 @@ namespace CKK.Logic.Models
         public void SetPrice(decimal Price)
 
         {
-            productPrice=Price;
+            productPrice = Price;
         }
     }
 }
