@@ -8,28 +8,28 @@ namespace CKK.Logic.Models
 {
     public class Customer
     {
-        private int customerID;
+        private int customerId;
         private string customerName;
         private string customerAddress;
 
-        public Customer(int ID, string Name, string Address)
+        public Customer(int Id, string Name, string Address)
 
         {
-            customerID = ID;
+            customerId = Id;
             customerName = Name;
             customerAddress = Address;
         }
 
-        public int GetID()
+        public int GetId()
 
         {
-            return customerID;
+            return customerId;
         }
 
-        public void SetID(int ID)
+        public void SetId(int Id)
 
         {
-            customerID=ID;
+            customerId = Id;
         }
 
         public string GetName()
@@ -41,7 +41,7 @@ namespace CKK.Logic.Models
         public void SetName(string Name)
 
         {
-            customerName=Name;
+            customerName = Name;
         }
 
         public string GetAddress()
@@ -55,6 +55,6 @@ namespace CKK.Logic.Models
         {
             customerAddress = Address;
         }
-   
+
     }
 }
