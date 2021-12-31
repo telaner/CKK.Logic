@@ -25,7 +25,7 @@ namespace CKK.Logic.Models
             return productId;
         }
 
-        public void SetID(int Id)
+        public void SetId(int Id)
 
         {
             productId = Id;
