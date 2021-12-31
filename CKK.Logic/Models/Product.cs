@@ -19,16 +19,16 @@ namespace CKK.Logic.Models
             productPrice = Price;
         }
 
-        public int GetID()
+        public int GetId()
 
         {
             return productId;
         }
 
-        public void SetID(int ID)
+        public void SetID(int Id)
 
         {
-            productId = ID;
+            productId = Id;
         }
 
         public string GetName()
