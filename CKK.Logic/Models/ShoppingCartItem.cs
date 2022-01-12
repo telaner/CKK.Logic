@@ -33,18 +33,6 @@ namespace CKK.Logic.Models
             shoppingProduct = product;
         }
 
-        public decimal GetPrice() 
-        
-        {
-            return productPrice;       
-        }
-
-        public void SetPrice(int Price)
-
-        {
-            productPrice = Price;
-        }
-
         public int GetQuantity()
 
         {
