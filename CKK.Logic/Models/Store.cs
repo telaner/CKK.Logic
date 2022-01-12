@@ -34,13 +34,13 @@ namespace CKK.Logic.Models
         {
         if (_product1 == null) 
             {
-                prod = _product1;
+                _product1 = prod;
                 if (_product1 != null)
                 {
-                    prod = _product2;
+                    _product2 = prod;
                     if (_product2 != null) 
                     {
-                        prod = _product3;
+                        _product3 = prod;
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace CKK.Logic.Models
             {
                 return _product2; 
             }
-            if (_product3.Equals(_id)) 
+            if (_product3.Equals(id)) 
             { 
                 return _product3; 
             }
