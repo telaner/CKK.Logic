@@ -14,89 +14,91 @@ namespace CKK.Logic.Models
         private Product _product2;
         private Product _product3;
 
-        public int GetId() 
+        public int GetId()
         {
             return _id;
         }
-        public void SetId(int id) 
+        public void SetId(int id)
         {
-            _id = id; 
+            _id = id;
         }
-        public string GetName() 
+        public string GetName()
         {
             return _name;
         }
-        public void SetName(string name) 
+        public void SetName(string name)
         {
             _name = name;
         }
         public void AddStoreItem(Product prod)
         {
-        if (_product1 == null) 
+            if (_product1 == null)
+
             {
                 _product1 = prod;
-                if (_product1 != null)
-                {
-                    _product2 = prod;
-                    if (_product2 != null) 
-                    {
-                        _product3 = prod;
-                    }
-                }
+            }
+            else if (_product2 == null)
+            {
+                _product2 = prod;
+            }
+            else if (_product3 == null)
+            {
+                _product3 = prod;
             }
         }
-        public void RemoveStoreItem(int productNumber) 
+
+        public void RemoveStoreItem(int productNumber)
         {
-            if (_product1.Equals(productNumber))
+            if (productNumber == 1)
             {
                 _product1 = null;
             }
-            if (_product2.Equals(productNumber)) 
+            if (productNumber == 2)
             {
                 _product2 = null;
             }
-            if (_product3.Equals(productNumber)) 
+            if (productNumber == 3)
             {
                 _product3 = null;
             }
-           
+
         }
-        public Product GetStoreItem(int productNumber) 
+        public Product GetStoreItem(int productNumber)
         {
-            if (_product1.Equals(productNumber)) 
-            {
-                return _product1; 
-            }
-            if (_product2.Equals(productNumber)) 
-            { 
-                return _product2; 
-            }
-            if (_product3.Equals(productNumber))
-            {
-                return _product3;
-            }
-            else 
-            { 
-                return null; 
-            }
-        }
-        public Product FindStoreItemById(int id) 
-        {
-            if (_product1.Equals(id)) 
+            if (productNumber == 1)
             {
                 return _product1;
             }
-            if (_product1.Equals(id)) 
+            if (productNumber == 2)
             {
-                return _product2; 
+                return _product2;
             }
-            if (_product3.Equals(id)) 
-            { 
-                return _product3; 
+            if (productNumber == 3)
+            {
+                return _product3;
             }
-            else 
-            { 
-                return null; 
+            else
+            {
+                return null;
+            }
+        }
+        public Product FindStoreItemById(int id)
+        {
+            if (_product1.GetId().Equals(id))
+            {
+                return _product1;
+            }
+            if (_product1.GetId().Equals(id))
+            {
+                return _product2;
+            }
+            if (_product3.GetId().Equals(id))
+            {
+                return _product3;
+            }
+            else
+            {
+                return null;
             }
         }
     }
