@@ -14,12 +14,11 @@ namespace CKK.Logic.Models
         
               
 
-        public ShoppingCartItem(Product product, int Quantity, decimal Price)
+        public ShoppingCartItem(Product product, int Quantity)
 
         {
             shoppingProduct = product;
             shoppingQuantity = Quantity;
-            productPrice = Price;
         }
 
         public Product GetProduct()

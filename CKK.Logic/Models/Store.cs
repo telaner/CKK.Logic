@@ -14,11 +14,11 @@ namespace CKK.Logic.Models
         private Product _product2;
         private Product _product3;
 
-        public int GetID() 
+        public int GetId() 
         {
             return _id;
         }
-        public void SetID(int id) 
+        public void SetId(int id) 
         {
             _id = id; 
         }
