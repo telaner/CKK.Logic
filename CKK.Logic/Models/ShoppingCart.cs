@@ -26,11 +26,11 @@ namespace CKK.Logic.Models
 
         public ShoppingCartItem GetProductByID(int id)
         {
-            if (_product1.GetProduct().GetId() == id)
+            if (_product1 != null  && _product1.GetProduct().GetId()==id)
                 return _product1;
-           else if (_product2.GetProduct().GetId() == id)
+           else if (_product2 != null && _product2.GetProduct().GetId() == id)
                 return _product2;
-           else if (_product3.GetProduct().GetId() == id)
+           else if (_product3 != null && _product3.GetProduct().GetId() == id)
                 return _product3;
            else
                 return null;
