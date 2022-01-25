@@ -17,27 +17,25 @@ namespace CKK.tests
 
             Product _product1 = new Product();
             _product1.SetName("Toy Boat");
-            _product1.SetId(123);
+            
             _product1.SetPrice(3);
             int product1quantity = 2;
 
             Product _product2 = new Product();
             _product2.SetName("Necklace");
-            _product2.SetId(213);
+            
             _product2.SetPrice(6);
             int product2quantity = 3;
 
             Product _product3 = new Product();
             _product3.SetName("Hat");
-            _product3.SetId(312);
+            
             _product3.SetPrice(4);
             int product3quantity = 2;
 
 
             ShoppingCart shoppingCart = new(customer);
-            shoppingCart.GetProductByID(123);
-            shoppingCart.GetProductByID(213);
-            shoppingCart.GetProductByID(312);
+            
 
             var actual = shoppingCart.AddProduct(_product1, product1quantity);
             actual = shoppingCart.AddProduct(_product1, 1);
@@ -56,27 +54,25 @@ namespace CKK.tests
 
             Product _product1 = new Product();
             _product1.SetName("Toy Boat");
-            _product1.SetId(123);
+            
             _product1.SetPrice(3);
             int product1quantity = 2;
 
             Product _product2 = new Product();
             _product2.SetName("Necklace");
-            _product2.SetId(213);
+            
             _product2.SetPrice(6);
             int product2quantity = 3;
 
             Product _product3 = new Product();
             _product3.SetName("Hat");
-            _product3.SetId(312);
+            
             _product3.SetPrice(4);
             int product3quantity = 2;
 
 
             ShoppingCart shoppingCart = new(customer);
-            shoppingCart.GetProductByID(123);
-            shoppingCart.GetProductByID(213);
-            shoppingCart.GetProductByID(312);
+            
 
             shoppingCart.AddProduct(_product2, product2quantity);
             var actual = shoppingCart.RemoveProduct(_product2, 1);
@@ -95,27 +91,24 @@ namespace CKK.tests
 
             Product _product1 = new Product();
             _product1.SetName("Toy Boat");
-            _product1.SetId(123);
+            
             _product1.SetPrice(3);
             int product1quantity = 2;
 
             Product _product2 = new Product();
             _product2.SetName("Necklace");
-            _product2.SetId(213);
+            
             _product2.SetPrice(6);
             int product2quantity = 3;
 
             Product _product3 = new Product();
             _product3.SetName("Hat");
-            _product3.SetId(312);
+            
             _product3.SetPrice(4);
             int product3quantity = 2;
             
             ShoppingCart shoppingCart = new(customer);
-            shoppingCart.GetProductByID(123);
-            shoppingCart.GetProductByID(213);
-            shoppingCart.GetProductByID(312);
-
+           
             shoppingCart.AddProduct(_product1, product1quantity);
             
             shoppingCart.AddProduct(_product2, product2quantity);
