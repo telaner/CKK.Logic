@@ -24,7 +24,7 @@ namespace CKK.Logic.Models
             return _customer.GetId();
         }
 
-        public ShoppingCartItem GetProductByID(int id)
+        public ShoppingCartItem GetProductById(int id)
         {
             if (_product1 != null  && _product1.GetProduct().GetId()==id)
                 return _product1;

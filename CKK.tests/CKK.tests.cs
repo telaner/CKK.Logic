@@ -74,9 +74,9 @@ namespace CKK.tests
 
 
             ShoppingCart shoppingCart = new(customer);
-            shoppingCart.GetProductByID(123);
-            shoppingCart.GetProductByID(213);
-            shoppingCart.GetProductByID(312);
+            shoppingCart.GetProductById(123);
+            shoppingCart.GetProductById(213);
+            shoppingCart.GetProductById(312);
 
             shoppingCart.AddProduct(_product2, product2quantity);
             var actual = shoppingCart.RemoveProduct(_product2, 1);
