@@ -35,6 +35,9 @@ namespace CKK.tests
 
 
             ShoppingCart shoppingCart = new(customer);
+            shoppingCart.GetProductByID(123);
+            shoppingCart.GetProductByID(213);
+            shoppingCart.GetProductByID(312);
 
             var actual = shoppingCart.AddProduct(_product1, product1quantity);
             actual = shoppingCart.AddProduct(_product1, 1);
@@ -71,7 +74,9 @@ namespace CKK.tests
 
 
             ShoppingCart shoppingCart = new(customer);
-
+            shoppingCart.GetProductByID(123);
+            shoppingCart.GetProductByID(213);
+            shoppingCart.GetProductByID(312);
 
             shoppingCart.AddProduct(_product2, product2quantity);
             var actual = shoppingCart.RemoveProduct(_product2, 1);
@@ -107,9 +112,12 @@ namespace CKK.tests
             int product3quantity = 2;
             
             ShoppingCart shoppingCart = new(customer);
+            shoppingCart.GetProductByID(123);
+            shoppingCart.GetProductByID(213);
+            shoppingCart.GetProductByID(312);
 
             shoppingCart.AddProduct(_product1, product1quantity);
-
+            
             shoppingCart.AddProduct(_product2, product2quantity);
 
             shoppingCart.AddProduct(_product3, product3quantity);
