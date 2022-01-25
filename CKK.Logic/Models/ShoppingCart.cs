@@ -28,9 +28,9 @@ namespace CKK.Logic.Models
         {
            if(_product1.GetProduct().GetId().Equals(id))
                 return _product1;
-           if (_product2.GetProduct().GetId().Equals(id))
+           else if (_product2.GetProduct().GetId().Equals(id))
                 return _product2;
-           if (_product3.GetProduct().GetId().Equals(id))
+           else if (_product3.GetProduct().GetId().Equals(id))
                 return _product3;
            else
                 return null;
