@@ -35,9 +35,9 @@ namespace CKK.tests
 
 
             ShoppingCart shoppingCart = new(customer);
-            shoppingCart.GetProductByID(_product1.GetId());
-            shoppingCart.GetProductByID(_product2.GetId());
-            shoppingCart.GetProductByID(_product3.GetId());
+            shoppingCart.GetProductById(_product1.GetId());
+            shoppingCart.GetProductById(_product2.GetId());
+            shoppingCart.GetProductById(_product3.GetId());
 
             var actual = shoppingCart.AddProduct(_product1, product1quantity);
             actual = shoppingCart.AddProduct(_product1, 1);
