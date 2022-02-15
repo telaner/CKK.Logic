@@ -79,7 +79,7 @@ namespace CKK.tests
             shoppingCart.GetProductById(312);
 
             shoppingCart.AddProduct(_product2, product2quantity);
-            var actual = shoppingCart.RemoveProduct(_product2, 1);
+            var actual = shoppingCart.RemoveProduct(_product2.GetId(), 1);
 
             Assert.AreEqual(2, actual.GetQuantity());
 
