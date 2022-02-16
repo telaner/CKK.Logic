@@ -12,6 +12,12 @@ namespace CKK.Logic.Models
         private string _name;
         private List<StoreItem> Items;
 
+        public Store()
+
+        {
+            Items = new List<StoreItem>();
+        }
+
         public int GetId()
         {
             return _id;
@@ -55,12 +61,12 @@ namespace CKK.Logic.Models
         public StoreItem RemoveStoreItem(int id, int quantity)
         {
             var existingItem = FindStoreItemById(id);
-            if (Items.Contains(existingItem) && (existingItem.GetQuantity()-quantity >= 0))
+            if (Items.Contains(existingItem) && ((existingItem.GetQuantity() - quantity) >= 0))
             {
-                existingItem.SetQuantity(existingItem.GetQuantity() - quantity);
+                existingItem.SetQuantity((existingItem.GetQuantity()) - quantity);
                 return existingItem;
             }
-            if (Items.Contains(existingItem) && (existingItem.GetQuantity() - quantity <= 0))
+            if (Items.Contains(existingItem) && ((existingItem.GetQuantity() - quantity) <= 0))
             {
                 existingItem.SetQuantity(0);
                 return existingItem;
@@ -82,6 +88,7 @@ namespace CKK.Logic.Models
                 where Item.GetProduct().GetId() == id
                 select Item;
                 return FindbyId.FirstOrDefault();
+                
             }
         }
     } 

@@ -12,8 +12,9 @@ namespace CKK.Logic.Models
         private List<ShoppingCartItem> Products;
 
 
-        public ShoppingCart(Customer cust) 
+        public ShoppingCart(Customer cust)
         {
+            Products = new List<ShoppingCartItem>();
             _customer = cust;
         }
 
