@@ -40,8 +40,8 @@ namespace CKK.Logic.Models
             var existingItem = GetProductById(prod.GetId());
             if (existingItem == null)
             {
-                Products.Add(existingItem);
-                return existingItem;
+                Products.Add(new ShoppingCartItem(prod, Quantity));
+                return new ShoppingCartItem(prod, Quantity);
             }
 
             if (Products.Contains(existingItem))
