@@ -60,7 +60,7 @@ namespace CKK.Logic.Models
                 return null;
 
             var existingItem = GetProductById(id);
-            if (Products.Contains(existingItem) && (existingItem.GetQuantity() - Quantity >= 0))
+            if (Products.Contains(existingItem) && (existingItem.GetQuantity() - Quantity >= 1))
             {
                 existingItem.SetQuantity(existingItem.GetQuantity() - Quantity);
                 return existingItem;
