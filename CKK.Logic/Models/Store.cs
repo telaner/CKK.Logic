@@ -15,7 +15,9 @@ namespace CKK.Logic.Models
         public Store()
 
         {
+
             Items = new List<StoreItem>();
+
         }
 
         public int GetId()

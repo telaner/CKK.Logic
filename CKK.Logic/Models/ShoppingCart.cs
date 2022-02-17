@@ -34,7 +34,7 @@ namespace CKK.Logic.Models
         }
         public ShoppingCartItem AddProduct(Product prod, int Quantity) 
         {
-            if (Quantity < 1)
+            if (Quantity <= 0)
                 return null;
 
             var existingItem = GetProductById(prod.GetId());
@@ -55,7 +55,9 @@ namespace CKK.Logic.Models
         
         public ShoppingCartItem RemoveProduct(int id, int Quantity) 
         {
-            
+            if (Quantity < 1)
+                return null;
+
             var existingItem = GetProductById(id);
             if (Products.Contains(existingItem) && (existingItem.GetQuantity() - Quantity >= 0))
             {
@@ -66,7 +68,7 @@ namespace CKK.Logic.Models
             {
                 Products.Remove(existingItem);
                 existingItem.SetQuantity(0);
-                return null;
+                return existingItem;
             }
             else
                 return null;
