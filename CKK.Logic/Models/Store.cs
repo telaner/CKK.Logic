@@ -38,7 +38,7 @@ namespace CKK.Logic.Models
 
             if (Items.Contains(existingItem))
             {
-                existingItem.SetQuantity(existingItem.GetQuantity() + quantity);
+                existingItem.Quantity += quantity;
                 return existingItem;
             }
             else
@@ -49,14 +49,14 @@ namespace CKK.Logic.Models
         public StoreItem RemoveStoreItem(int id, int quantity)
         {
             var existingItem = FindStoreItemById(id);
-            if (Items.Contains(existingItem) && ((existingItem.GetQuantity() - quantity) >= 0))
+            if (Items.Contains(existingItem) && ((existingItem.Quantity - quantity) >= 0))
             {
-                existingItem.SetQuantity((existingItem.GetQuantity()) - quantity);
+                existingItem.Quantity -= quantity;
                 return existingItem;
             }
-            if (Items.Contains(existingItem) && ((existingItem.GetQuantity() - quantity) <= 0))
+            if (Items.Contains(existingItem) && ((existingItem.Quantity - quantity) <= 0))
             {
-                existingItem.SetQuantity(0);
+                existingItem.Quantity = 0;
                 return existingItem;
             }
             else
@@ -73,7 +73,7 @@ namespace CKK.Logic.Models
             public StoreItem FindStoreItemById(int id)
             {
                 var FindbyId = from Item in Items
-                where Item.GetProduct().Id == id
+                where Item.Product.Id == id
                 select Item;
                 return FindbyId.FirstOrDefault();
                 
