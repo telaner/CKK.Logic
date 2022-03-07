@@ -10,7 +10,7 @@ namespace CKK.Logic.Models
     {
 
         public decimal Price { get; set; }
-        public Product(int Id, string name) : base(Id, name) { }
+        public Product(int id, string name) : base(id, name) { }
 
     }
 }
