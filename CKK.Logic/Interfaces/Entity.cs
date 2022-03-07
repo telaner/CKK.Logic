@@ -8,7 +8,7 @@ namespace CKK.Logic.Interfaces
 {
     public abstract class Entity
     {
-        public int Id { get; }
+        public int Id { get; set; }
         public string Name { get; }
         public Entity(int id, string name) 
         {
