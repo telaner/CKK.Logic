@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Models
 {
-    public class Store
+    public class Store : Interfaces.Entity
     {
-        private int _id;
-        private string _name;
+        
         private List<StoreItem> Items;
 
-        public Store()
+        public Store(int id, string name) : base(id, name)
 
         {
 
@@ -20,22 +19,7 @@ namespace CKK.Logic.Models
 
         }
 
-        public int GetId()
-        {
-            return _id;
-        }
-        public void SetId(int id)
-        {
-            _id = id;
-        }
-        public string GetName()
-        {
-            return _name;
-        }
-        public void SetName(string name)
-        {
-            _name = name;
-        }
+      
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
             
@@ -43,7 +27,7 @@ namespace CKK.Logic.Models
             {
                 return null;
             }
-            var existingItem = FindStoreItemById(prod.GetId());
+            var existingItem = FindStoreItemById(prod.Id);
             if (existingItem == null)
             {
                 var newitem = new StoreItem(prod, quantity);
@@ -89,7 +73,7 @@ namespace CKK.Logic.Models
             public StoreItem FindStoreItemById(int id)
             {
                 var FindbyId = from Item in Items
-                where Item.GetProduct().GetId() == id
+                where Item.GetProduct().Id == id
                 select Item;
                 return FindbyId.FirstOrDefault();
                 

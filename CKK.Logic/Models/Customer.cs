@@ -6,47 +6,12 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Models
 {
-    public class Customer
+    public class Customer : Interfaces.Entity
     {
-        private int customerId;
-        private string customerName;
-        private string customerAddress;
+        
+        public string Address { get; set; }
 
-        public int GetId()
-
-        {
-            return customerId;
-        }
-
-        public void SetId(int Id)
-
-        {
-            customerId = Id;
-        }
-
-        public string GetName()
-
-        {
-            return customerName;
-        }
-
-        public void SetName(string Name)
-
-        {
-            customerName = Name;
-        }
-
-        public string GetAddress()
-
-        {
-            return customerAddress;
-        }
-
-        public void SetAddress(string Address)
-
-        {
-            customerAddress = Address;
-        }
+        public Customer(int id, string name) : base (id, name) { }
 
     }
 }

@@ -8,26 +8,22 @@ namespace CKK.Logic.Models
 {
     public class ShoppingCart
     {
-        private Customer _customer;
+        public Customer Customer { get; set; }
+        public Product Product { get; set; }
         private List<ShoppingCartItem> Products;
 
 
         public ShoppingCart(Customer cust)
         {
             Products = new List<ShoppingCartItem>();
-            _customer = cust;
         }
 
         
-        public int GetCustomerID() 
-        {
-            return _customer.GetId();
-        }
 
         public ShoppingCartItem GetProductById(int id)
         {
             var ProductbyId = from product in Products
-                           where product.GetProduct().GetId() == id
+                           where product.Product.Id == id
                            select product;
             return ProductbyId.FirstOrDefault();
 
@@ -37,7 +33,7 @@ namespace CKK.Logic.Models
             if (Quantity <= 0)
                 return null;
 
-            var existingItem = GetProductById(prod.GetId());
+            var existingItem = GetProductById(prod.Id);
             if (existingItem == null)
             {
                 var newitem = new ShoppingCartItem(prod,Quantity);
@@ -47,7 +43,7 @@ namespace CKK.Logic.Models
 
             if (Products.Contains(existingItem))
             {
-                existingItem.SetQuantity(existingItem.GetQuantity() + Quantity);
+                existingItem.Quantity += Quantity;
                 return existingItem;
             }
             else
@@ -60,14 +56,14 @@ namespace CKK.Logic.Models
                 return null;
 
             var existingItem = GetProductById(id);
-            if (Products.Contains(existingItem) && (existingItem.GetQuantity() - Quantity >= 1))
+            if (Products.Contains(existingItem) && (existingItem.Quantity - Quantity >= 1))
             {
-                existingItem.SetQuantity(existingItem.GetQuantity() - Quantity);
+                existingItem.Quantity -= Quantity;
                 return existingItem;
             }
-            if (Products.Contains(existingItem) && (existingItem.GetQuantity() - Quantity <= 0))
+            if (Products.Contains(existingItem) && (existingItem.Quantity - Quantity <= 0))
             {
-                existingItem.SetQuantity(0);
+                existingItem.Quantity = 0;
                 Products.Remove(existingItem);
                 return existingItem;
             }

@@ -6,46 +6,11 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Models
 {
-    public class Product
+    public class Product : Interfaces.Entity
     {
-        private int productId;
-        private string productName;
-        private decimal productPrice;
 
-        public int GetId()
+        public decimal Price { get; set; }
+        public Product(int id, string name) : base(id, name) { }
 
-        {
-            return productId;
-        }
-
-        public void SetId(int Id)
-
-        {
-            productId = Id;
-        }
-
-        public string GetName()
-
-        {
-            return productName;
-        }
-
-        public void SetName(string Name)
-
-        {
-            productName = Name;
-        }
-
-        public decimal GetPrice()
-
-        {
-            return productPrice;
-        }
-
-        public void SetPrice(decimal Price)
-
-        {
-            productPrice = Price;
-        }
     }
 }
