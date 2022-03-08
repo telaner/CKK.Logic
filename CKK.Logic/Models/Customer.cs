@@ -11,7 +11,7 @@ namespace CKK.Logic.Models
         
         public string Address { get; set; }
 
-        public Customer(int id, string name) : base(id, name) { }
+        public Customer() : base() { }
 
     }
 }
