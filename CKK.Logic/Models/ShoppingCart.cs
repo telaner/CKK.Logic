@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Models
 {
-    public class ShoppingCart : Interfaces.Entity, Interfaces.IShoppingCart
+    public class ShoppingCart : Interfaces.IShoppingCart
     {
         public Customer Customer { get; set; }
         public Product Product { get; set; }
         private List<ShoppingCartItem> Products;
+        
+        public ShoppingCart(Customer cust)
+        {
+            Customer = cust;
+        }
+
 
         public int GetCustomerId()
         {
