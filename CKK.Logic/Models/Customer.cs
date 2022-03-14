@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CKK.Logic.Interfaces;
 
 namespace CKK.Logic.Models
 {
-    public class Customer : Interfaces.Entity
+    public class Customer : Entity
     {
         
         public string Address { get; set; }

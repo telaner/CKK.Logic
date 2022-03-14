@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Models
 {
-    public class ShoppingCart
+    public class ShoppingCart : Interfaces.IShoppingCart
     {
         public Customer Customer { get; set; }
         public Product Product { get; set; }
         private List<ShoppingCartItem> Products;
+
+        public int GetCustomerId()
+        {
+            return Customer.Id;
+        }
 
 
         public ShoppingCart()
@@ -70,6 +75,7 @@ namespace CKK.Logic.Models
             else
                 return null;
         }
+
         public decimal GetTotal() 
         {
             var total = from product in Products
@@ -79,6 +85,7 @@ namespace CKK.Logic.Models
             
             
         }
+
         public List<ShoppingCartItem> GetProducts()
         {
             return Products;
