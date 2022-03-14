@@ -7,7 +7,7 @@ using CKK.Logic.Models;
 
 namespace CKK.Logic.Interfaces
 {
-    interface IShoppingCart
+    public interface IShoppingCart
     {
         int GetCustomerId();
 
