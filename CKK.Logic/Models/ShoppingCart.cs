@@ -63,7 +63,7 @@ namespace CKK.Logic.Models
             if (Quantity < 0)
             {
                 return null;
-                throw new ArgumentOutOfRangeException("Quantity must be greater than 0");
+                throw new ArgumentOutOfRangeException(nameof(Quantity),"Quantity must be greater than 0");
             }
 
             var existingItem = GetProductById(id);
@@ -101,7 +101,7 @@ namespace CKK.Logic.Models
                 throw new InvalidIdException();
             }
             var ProductbyId = from product in Products
-                              where product.Prod.Id == id
+                              where product.Product.Id == id
                               select product;
             return ProductbyId.FirstOrDefault();
 

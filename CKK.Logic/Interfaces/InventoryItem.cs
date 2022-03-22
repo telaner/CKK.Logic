@@ -16,7 +16,7 @@ namespace CKK.Logic.Interfaces
 
         public InventoryItem(Product product, int quantity)
         {
-            Prod = product;
+            Product = product;
             Quantity = quantity;
         }
 
@@ -37,7 +37,7 @@ namespace CKK.Logic.Interfaces
             
         }
 
-        public Product Prod 
+        public Product Product 
         {
             get 
             {

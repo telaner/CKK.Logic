@@ -20,7 +20,7 @@ namespace CKK.Logic.Models
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Price must be 0 or greater");
+                    throw new ArgumentOutOfRangeException(nameof(value),"Price must be 0 or greater");
                 }
 
             }

@@ -52,7 +52,7 @@ namespace CKK.Logic.Models
         {
             if (quantity < 0) 
             {
-                throw new ArgumentOutOfRangeException("Quantity must be 0 or greater.");
+                throw new ArgumentOutOfRangeException(nameof(quantity),"Quantity must be 0 or greater.");
             }
             var existingItem = FindStoreItemById(id);
             if (Items.Contains(existingItem) && ((existingItem.Quantity - quantity) >= 0))
@@ -87,7 +87,7 @@ namespace CKK.Logic.Models
                 throw new InvalidIdException();
             }
             var FindbyId = from Item in Items
-                           where Item.Prod.Id == id
+                           where Item.Product.Id == id
                            select Item;
             return FindbyId.FirstOrDefault();
 
