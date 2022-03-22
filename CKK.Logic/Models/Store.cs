@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Models
 {
@@ -26,6 +27,7 @@ namespace CKK.Logic.Models
             if (quantity <= 0)
             {
                 return null;
+                throw new InventoryItemStockTooLowException();
             }
             var existingItem = FindStoreItemById(prod.Id);
             if (existingItem == null)
@@ -48,6 +50,10 @@ namespace CKK.Logic.Models
 
         public StoreItem RemoveStoreItem(int id, int quantity)
         {
+            if (quantity < 0) 
+            {
+                throw new ArgumentOutOfRangeException("Quantity must be 0 or greater.");
+            }
             var existingItem = FindStoreItemById(id);
             if (Items.Contains(existingItem) && ((existingItem.Quantity - quantity) >= 0))
             {
@@ -60,7 +66,10 @@ namespace CKK.Logic.Models
                 return existingItem;
             }
             else
+            {
                 return null;
+                throw new ProductDoesNotExistException();
+            }
         }
 
 
@@ -73,8 +82,12 @@ namespace CKK.Logic.Models
 
         public StoreItem FindStoreItemById(int id)
         {
+            if (id < 0) 
+            {
+                throw new InvalidIdException();
+            }
             var FindbyId = from Item in Items
-                           where Item.Product.Id == id
+                           where Item.Prod.Id == id
                            select Item;
             return FindbyId.FirstOrDefault();
 

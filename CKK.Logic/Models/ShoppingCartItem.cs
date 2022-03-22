@@ -14,7 +14,7 @@ namespace CKK.Logic.Models
         
         public decimal GetTotal()
         {
-            return Product.Price * Quantity; 
+            return base.Prod.Price * Quantity; 
         }
 
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CKK.Logic.Exceptions;
+
 
 namespace CKK.Logic.Models
 {
@@ -31,18 +33,13 @@ namespace CKK.Logic.Models
 
         
 
-        public ShoppingCartItem GetProductById(int id)
-        {
-            var ProductbyId = from product in Products
-                           where product.Product.Id == id
-                           select product;
-            return ProductbyId.FirstOrDefault();
-
-        }
         public ShoppingCartItem AddProduct(Product prod, int Quantity) 
         {
             if (Quantity <= 0)
+            {
                 return null;
+                throw new InventoryItemStockTooLowException();
+            }
 
             var existingItem = GetProductById(prod.Id);
             if (existingItem == null)
@@ -63,8 +60,11 @@ namespace CKK.Logic.Models
         
         public ShoppingCartItem RemoveProduct(int id, int Quantity) 
         {
-            if (Quantity < 1)
+            if (Quantity < 0)
+            {
                 return null;
+                throw new ArgumentOutOfRangeException("Quantity must be greater than 0");
+            }
 
             var existingItem = GetProductById(id);
             if (Products.Contains(existingItem) && (existingItem.Quantity - Quantity >= 1))
@@ -79,7 +79,10 @@ namespace CKK.Logic.Models
                 return existingItem;
             }
             else
+            {
                 return null;
+                throw new ProductDoesNotExistException();
+            }
         }
 
         public decimal GetTotal() 
@@ -88,8 +91,20 @@ namespace CKK.Logic.Models
                            let productTotal = product.GetTotal()
                            select productTotal;
             return total.Sum();
-            
-            
+                        
+        }
+
+        public ShoppingCartItem GetProductById(int id)
+        {
+            if (id < 0) 
+            {
+                throw new InvalidIdException();
+            }
+            var ProductbyId = from product in Products
+                              where product.Prod.Id == id
+                              select product;
+            return ProductbyId.FirstOrDefault();
+
         }
 
         public List<ShoppingCartItem> GetProducts()
