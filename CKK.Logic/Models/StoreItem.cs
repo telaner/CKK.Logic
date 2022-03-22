@@ -10,7 +10,7 @@ namespace CKK.Logic.Models
     public class StoreItem : InventoryItem
     {
        
-        public StoreItem(Product Product, int Quantity) : base(Product, Quantity) { }
+        public StoreItem(Product product, int quantity) : base(product, quantity) { }
 
     }
 }

@@ -26,7 +26,7 @@ namespace CKK.Logic.Models
 
             if (quantity <= 0)
             {
-                return null;
+                
                 throw new InventoryItemStockTooLowException();
             }
             var existingItem = FindStoreItemById(prod.Id);
@@ -67,7 +67,7 @@ namespace CKK.Logic.Models
             }
             else
             {
-                return null;
+                
                 throw new ProductDoesNotExistException();
             }
         }

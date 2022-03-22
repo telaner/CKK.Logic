@@ -25,7 +25,7 @@ namespace CKK.Logic.Interfaces
             }
         }
         public string Name { get; set; }
-        public Entity() { }
+        
         
     }
 }
