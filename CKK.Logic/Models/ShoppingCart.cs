@@ -37,7 +37,7 @@ namespace CKK.Logic.Models
         {
             if (Quantity <= 0)
             {
-                
+                return null;
                 throw new InventoryItemStockTooLowException();
             }
 
@@ -60,9 +60,9 @@ namespace CKK.Logic.Models
         
         public ShoppingCartItem RemoveProduct(int id, int Quantity) 
         {
-            if (Quantity < 0)
+            if (Quantity < 1)
             {
-                
+                return null;
                 throw new ArgumentOutOfRangeException(nameof(Quantity),"Quantity must be greater than 0");
             }
 
