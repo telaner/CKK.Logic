@@ -10,7 +10,7 @@ namespace CKK.Logic.Models
     public class ShoppingCartItem : InventoryItem
     {
         
-        public ShoppingCartItem(Product Prod, int Quantity) : base(Prod, Quantity) { }     
+        public ShoppingCartItem(Product Product, int Quantity) : base(Product, Quantity) { }     
         
         public decimal GetTotal()
         {
