@@ -10,7 +10,7 @@ namespace CKK.Logic.Models
     public class Product : Entity
     {
 
-        public decimal Price { get; set; }
+        public decimal Price;
         public decimal SetPrice() 
         {
             if (Price < 0)

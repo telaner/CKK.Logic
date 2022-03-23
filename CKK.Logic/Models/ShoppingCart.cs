@@ -98,6 +98,7 @@ namespace CKK.Logic.Models
         {
             if (id < 0) 
             {
+                return null;
                 throw new InvalidIdException();
             }
             var ProductbyId = from product in Products

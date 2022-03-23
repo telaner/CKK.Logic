@@ -9,7 +9,7 @@ namespace CKK.Logic.Interfaces
 {
     public abstract class Entity
     {
-        public int Id { get; set; }
+        public int Id;
         
         public int SetId()
         {
