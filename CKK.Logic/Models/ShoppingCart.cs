@@ -37,7 +37,6 @@ namespace CKK.Logic.Models
         {
             if (Quantity <= 0)
             {
-                return null;
                 throw new InventoryItemStockTooLowException();
             }
 
@@ -60,9 +59,8 @@ namespace CKK.Logic.Models
         
         public ShoppingCartItem RemoveProduct(int id, int Quantity) 
         {
-            if (Quantity < 1)
+            if (Quantity < 0)
             {
-                return null;
                 throw new ArgumentOutOfRangeException(nameof(Quantity),"Quantity must be greater than 0");
             }
 
@@ -78,11 +76,13 @@ namespace CKK.Logic.Models
                 Products.Remove(existingItem);
                 return existingItem;
             }
-            else
+            if (!Products.Contains(existingItem))
             {
-                
+
                 throw new ProductDoesNotExistException();
             }
+            else
+                return null;
         }
 
         public decimal GetTotal() 
