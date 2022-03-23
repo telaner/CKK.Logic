@@ -10,21 +10,20 @@ namespace CKK.Logic.Models
     public class Product : Entity
     {
 
-        public decimal Price
+        public decimal Price { get; set; }
+        public decimal SetPrice() 
         {
-            get
+            if (Price < 0)
             {
-                return Price;
+                throw new ArgumentOutOfRangeException(nameof(Price), "Must be greater than 0");  
             }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value),"Price must be 0 or greater");
-                }
-
+            else 
+            { 
+                return Price; 
             }
         }
+       
+
         public Product() : base() { }
 
     }
