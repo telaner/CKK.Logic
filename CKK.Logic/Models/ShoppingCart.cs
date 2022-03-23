@@ -63,7 +63,7 @@ namespace CKK.Logic.Models
         {
             if (Quantity < 0)
             {
-                return null;
+                
                 throw new ArgumentOutOfRangeException(nameof(Quantity),"Quantity must be greater than 0");
             }
 
@@ -102,7 +102,6 @@ namespace CKK.Logic.Models
         {
             if (id < 0) 
             {
-                return null;
                 throw new InvalidIdException();
             }
             var ProductbyId = from product in Products
