@@ -23,7 +23,6 @@ namespace CKK.Logic.Interfaces
                 return Id;
             }
 
-            
         }
         public string Name { get; set; }
         public Entity() { }
