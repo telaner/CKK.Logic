@@ -9,17 +9,18 @@ namespace CKK.Logic.Interfaces
 {
     public abstract class Entity
     {
+        private int id;
         public int Id 
         {
             get
             {
-                return Id;
+                return id;
             }
             set 
             {
                 if (value >= 0) 
                 {
-                    Id = value;
+                    id = value;
                 }
                 else 
                 {
