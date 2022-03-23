@@ -17,6 +17,7 @@ namespace CKK.Logic.Models
         public ShoppingCart(Customer cust)
         {
             Customer = cust;
+            Products = new List<ShoppingCartItem>();
         }
 
 
@@ -37,7 +38,7 @@ namespace CKK.Logic.Models
         {
             if (Quantity <= 0)
             {
-                return null;
+
                 throw new InventoryItemStockTooLowException();
             }
 
