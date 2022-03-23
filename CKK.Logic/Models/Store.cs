@@ -65,10 +65,13 @@ namespace CKK.Logic.Models
                 existingItem.Quantity = 0;
                 return existingItem;
             }
+            if (!Items.Contains(existingItem))
+            {
+                throw new ProductDoesNotExistException();
+            }
             else
             {
                 return null;
-                throw new ProductDoesNotExistException();
             }
         }
 

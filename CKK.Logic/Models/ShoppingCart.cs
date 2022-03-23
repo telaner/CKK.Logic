@@ -78,10 +78,13 @@ namespace CKK.Logic.Models
                 Products.Remove(existingItem);
                 return existingItem;
             }
+            if (!Products.Contains(existingItem)) 
+            {
+                throw new ProductDoesNotExistException();
+            }
             else
             {
                 return null;
-                throw new ProductDoesNotExistException();
             }
         }
 
