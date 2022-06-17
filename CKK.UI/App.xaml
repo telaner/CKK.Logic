@@ -1,0 +1,13 @@
+﻿<Application x:Class="CKK.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Logic ="clr-namespace:CKK.Logic.Models;assembly=CKK.Logic"
+             xmlns:Persistance ="clr-namespace:CKK.Persistance.Models;assembly=CKK.Persistance"
+             xmlns:local="clr-namespace:CKK.UI"
+             StartupUri="ShellView.xaml">
+
+    <Application.Resources>
+        <Persistance:FileStore x:Key="globStore"></Persistance:FileStore>
+    </Application.Resources>
+    
+</Application>

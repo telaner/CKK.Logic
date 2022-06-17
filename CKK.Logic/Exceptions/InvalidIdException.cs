@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Exceptions
 {
+    [Serializable]
     public class InvalidIdException : Exception
     {
+        
         public InvalidIdException() : base("Id cannot be less than 0") 
         {
 

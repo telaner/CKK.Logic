@@ -7,6 +7,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Interfaces
 {
+    [Serializable]
     public abstract class Entity
     {
         private int id;
@@ -16,6 +17,7 @@ namespace CKK.Logic.Interfaces
             {
                 return id;
             }
+            
             set 
             {
                 if (value >= 0) 

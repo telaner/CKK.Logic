@@ -1,47 +1,50 @@
-﻿using System;
+﻿using CKK.Logic.Interfaces;
+using CKK.Logic.Models;
+using CKK.Persistance.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 using CKK.Logic.Exceptions;
 
-namespace CKK.Logic.Models
+namespace CKK.Persistance.Models
 {
-    public class Store : Interfaces.Entity, Interfaces.IStore
+    public class FileStore : IStore, ISavable, ILoadable
     {
-
         private List<StoreItem> Items;
+        public string FilePath = @"C:\Users\risee\Documents\" + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
+        private int Idcounter = 0;
 
-        private int StoreIdcounter = 0;
+        static void Main() { }
 
-        public Store() : base()
-
+        public FileStore() 
         {
-
+            CreatePath();
             Items = new List<StoreItem>();
-
         }
-
-
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
 
             if (quantity <= 0)
             {
-                
+
                 throw new InventoryItemStockTooLowException();
             }
             var existingItem = FindStoreItemById(prod.Id);
             if (existingItem == null)
             {
-                
+
                 var newitem = new StoreItem(prod, quantity);
-                if (newitem.Product.Id <=0 )
+                if (newitem.Product.Id <= 0)
                 {
 
-                    newitem.Product.Id = ++StoreIdcounter;
+                    newitem.Product.Id = ++Idcounter;
                 }
-                
+
 
                     return newitem;
 
@@ -59,9 +62,9 @@ namespace CKK.Logic.Models
 
         public StoreItem RemoveStoreItem(int id, int quantity)
         {
-            if (quantity < 0) 
+            if (quantity < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(quantity),"Quantity must be 0 or greater.");
+                throw new ArgumentOutOfRangeException(nameof(quantity), "Quantity must be 0 or greater.");
             }
             var existingItem = FindStoreItemById(id);
             if (Items.Contains(existingItem) && ((existingItem.Quantity - quantity) >= 0))
@@ -87,14 +90,14 @@ namespace CKK.Logic.Models
         public StoreItem DeleteStoreItem(int id)
         {
             var existingItem = FindStoreItemById(id);
-            if (Items.Contains(existingItem)) 
+            if (Items.Contains(existingItem))
             {
                 Items.Remove(existingItem);
                 return null;
             }
-            else 
+            else
             {
-                return  null;
+                return null;
             }
         }
 
@@ -108,7 +111,7 @@ namespace CKK.Logic.Models
 
         public StoreItem FindStoreItemById(int id)
         {
-            if (id < 0) 
+            if (id < 0)
             {
                 throw new InvalidIdException();
             }
@@ -118,5 +121,28 @@ namespace CKK.Logic.Models
             return FindbyId.FirstOrDefault();
 
         }
+
+        public void Load()
+        {
+            FileStream fs = new FileStream(FilePath, FileMode.Open);
+            BinaryFormatter reader = new BinaryFormatter();
+            StoreItem Items = (StoreItem)reader.Deserialize(fs);
+        }
+
+
+        public void Save()
+        {
+            
+            FileStream fs = new FileStream(FilePath, FileMode.Append);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(fs, Items);
+                        
+        }
+
+        public void CreatePath()
+        {
+            Directory.CreateDirectory(FilePath);
+          
+        }
     }
-} 
+}

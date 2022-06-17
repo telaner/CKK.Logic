@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Exceptions
 {
+    [Serializable]
     public class InventoryItemStockTooLowException : Exception
     {
         public InventoryItemStockTooLowException() : base ("Quantity value cannot be less than 0") 

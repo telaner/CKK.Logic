@@ -7,10 +7,15 @@ using CKK.Logic.Interfaces;
 
 namespace CKK.Logic.Models
 {
+    [Serializable]
     public class StoreItem : InventoryItem
     {
        
-        public StoreItem(Product product, int quantity) : base(product, quantity) { }
+        public StoreItem(Product product, int quantity) : base(product, quantity) 
+        {
+          
+        }
+        
 
     }
 }

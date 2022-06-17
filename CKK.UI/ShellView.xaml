@@ -1,0 +1,61 @@
+﻿<Window x:Class="CKK.UI.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CKK.UI.Views"
+        mc:Ignorable="d"
+        Title="ShellView" Height="700" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <TextBox x:Name="header" IsReadOnly="True" Text="Corey's Knick Knacks" FontSize="24" Background="#FF4047B3" TextAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Width="320" />
+            <Image Source = "C:\Users\risee\Documents\School Otech\Structured Project III\headerimage.jpg" MaxHeight="75" Stretch="UniformToFill" Margin="10,0,0,0" Width="433"/>
+        </StackPanel>
+        <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Let's Sign in" Background="#FF684DEC" Foreground="White" Height="55" Width="760" Margin="0,10,0,10" VerticalContentAlignment="Center" TextAlignment="Center" FontSize="24"/>
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center">
+            <TextBlock Text="Username/Email" FontSize="16" FontWeight="Bold" Margin="10"/>
+            <TextBox MinHeight="40" MinWidth="500" Margin="10">
+            </TextBox>
+            <TextBlock Text="Password" FontSize="16" FontWeight="Bold" Margin="10"/>
+            <TextBox MinHeight="40" MinWidth="500" Margin="10">
+            </TextBox>
+        </StackPanel>
+        <TextBlock Grid.Column="1" Grid.Row="4" TextAlignment="Center" Text="Help me Sign in" Margin="10" FontWeight="Bold" TextDecorations="Underline"/>
+        <Button Grid.Column="1" Grid.Row="5" Margin="0,10,0,10" HorizontalAlignment="Center" FontSize="16" Width="147" Height="30" Background="#FF684DEC" Foreground="White" Click="Button_Click">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            Sign in
+        </Button>
+        <Button Grid.Column="1" Grid.Row="6" Margin="10" HorizontalAlignment="Center" FontSize="16" Height="30" Width="400" Background="White">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            Sign in with Google?
+        </Button>
+        <Button Grid.Column="1" Grid.Row="7" Margin="10" HorizontalAlignment="Center" FontSize="16" Height="30" Width="400" Background="White">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            Sign in with Facebook?
+        </Button>
+
+    </Grid>
+</Window>

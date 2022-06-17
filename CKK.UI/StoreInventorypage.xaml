@@ -1,0 +1,121 @@
+﻿<Window x:Class="CKK.UI.Views.StoreInventorypage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CKK.UI.Views"
+        mc:Ignorable="d"
+        Title="StoreInventorypage" Height="750" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <!-- Row 1-->
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <TextBox x:Name="header" IsReadOnly="True" Text="Corey's Knick Knacks" FontSize="24" Background="#FF4047B3" TextAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Width="320" />
+            <Image Source = "C:\Users\risee\Documents\School Otech\Structured Project III\headerimage.jpg" MaxHeight="75" Stretch="UniformToFill" Margin="10,0,0,0" Width="433"/>
+        </StackPanel>
+
+        <!-- Row 2-->
+        <Rectangle Grid.Column="1" Grid.Row="2" Margin="0,10,0,10" Height="55" Width="760" Fill="#FF1A6541"/>
+
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="Manager View" Foreground="white" HorizontalAlignment="Left" FontSize="20" VerticalAlignment="Center" Margin="10" FontWeight="Light"/>
+        <TextBlock  Grid.Column="1" Grid.Row="2" Text="Store Inventory" Foreground="white" VerticalAlignment="Center" FontSize="24" TextAlignment="Center"/>
+
+        <StackPanel  Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBox Text="Search for product" Background="white" Foreground="Gray" Margin="10" Height="31" Width="150" TextAlignment="left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Content="Search" Background="{x:Null}" Foreground="white" VerticalAlignment="Center" Margin="10" BorderBrush="white" FontWeight="Light" BorderThickness=".5" Width="50" Height="31"/>
+        </StackPanel>
+
+        <!-- Row 3-->
+        <ListBox x:Name="StoreInventory" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding _Items}" FontSize="18" >
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="storeinv">
+                    <StackPanel x:Name="storetext" Orientation="Horizontal">
+                        
+                        <TextBlock Text="Name: "/>
+                        <TextBox x:Name="nameBox" Text="{Binding Product.Name}"  IsReadOnly="True"/>
+                        <TextBlock Text="  "/>
+                        <TextBlock Text="ID: "/>
+                        <TextBlock Text="{Binding Product.Id}"/>
+                        
+                        <TextBlock Text="                    "/>
+                        
+                        <TextBlock Text="Quantity: " TextAlignment="Right" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="quantityBox" Text="{Binding Quantity}" TextAlignment="Right" HorizontalAlignment="Right" IsReadOnly="True"/>
+                        <TextBlock Text="Price: " TextAlignment="Right"/>
+                        <TextBox x:Name="priceBox" Text="{Binding Product.Price, StringFormat=C}" TextAlignment="Right"  IsReadOnly="True"/>
+                       
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Row 4-->
+        
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="10" HorizontalAlignment="Center">
+           
+            <Button x:Name="deleteButton" Content="Delete" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="deleteButton_Click"/>
+            <Button x:Name="editButton" Content="Edit" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="editButton_Click"/>
+            
+        </StackPanel>
+
+        <!-- Row 5-->
+        
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="Add New Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+
+        <!-- Row 6-->
+        
+        <StackPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Name:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="newNamebox" MinHeight="25" MinWidth="100" Margin="10"/>
+            <TextBlock Text="Id:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="newIdbox" MinHeight="25" MinWidth="100" Margin="10" VerticalContentAlignment="Center"/>
+            <TextBlock Text="Price:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="newPricebox" MinHeight="25" MinWidth="100" Margin="10"/>
+            <TextBlock Text="Quantity:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="newQuantitybox" MinHeight="25" MinWidth="100" Margin="10"/>
+        </StackPanel>
+
+        <!-- Row 7-->
+        
+        <Button Grid.Column="1" Grid.Row="7" x:Name="addButton" Content="Add" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" HorizontalAlignment="Center" Click="addButton_Click"/>
+
+        <!-- Row 8-->
+        
+        <TextBlock Grid.Column="1" Grid.Row="8" Text="Edit Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+
+        <!-- Row 9-->
+
+        <StackPanel Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Name:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="editNamebox" MinHeight="25" MinWidth="100" Margin="10"/>
+            <TextBlock Text="Id:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="editIdbox" MinHeight="25" MinWidth="100" Margin="10" VerticalContentAlignment="Center" IsReadOnly="True"/>
+            <TextBlock Text="Price:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="editPricebox" MinHeight="25" MinWidth="100" Margin="10"/>
+            <TextBlock Text="Quantity:" FontSize="16" Margin="10"/>
+            <TextBox x:Name="editQuantitybox" MinHeight="25" MinWidth="100" Margin="10"/>
+        </StackPanel>
+
+        <Button Grid.Column="1" Grid.Row="10" x:Name="saveButton" Content="Save" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="saveButton_Click"/>
+
+
+    </Grid>
+</Window>
