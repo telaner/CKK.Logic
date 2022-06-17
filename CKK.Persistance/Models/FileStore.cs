@@ -16,7 +16,9 @@ namespace CKK.Persistance.Models
     public class FileStore : IStore, ISavable, ILoadable
     {
         private List<StoreItem> Items;
-        public string FilePath = @"C:\Users\risee\Documents\" + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
+        public readonly string FilePath = @"C:\Users\risee\Documents\School Otech\Structured project 1\CKK.Logic" + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
+
+        
         private int Idcounter = 0;
 
         static void Main() { }
@@ -124,18 +126,25 @@ namespace CKK.Persistance.Models
 
         public void Load()
         {
-            FileStream fs = new FileStream(FilePath, FileMode.Open);
-            BinaryFormatter reader = new BinaryFormatter();
-            StoreItem Items = (StoreItem)reader.Deserialize(fs);
+            
+            using( var fsOpen = new FileStream(FilePath,FileMode.Open, FileAccess.Read))
+            {
+                BinaryFormatter reader = new BinaryFormatter();
+                Items = (List<StoreItem>)reader.Deserialize(fsOpen);
+            }
+           
         }
 
 
         public void Save()
         {
-            
-            FileStream fs = new FileStream(FilePath, FileMode.Append);
-            BinaryFormatter formatter = new BinaryFormatter();
-            formatter.Serialize(fs, Items);
+            var filename = File.Create("StoreItems.dat");
+            string filepath = Path.Combine(FilePath, filename.ToString());
+            using (var fsitems = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(fsitems, Items);
+            }
                         
         }
 
