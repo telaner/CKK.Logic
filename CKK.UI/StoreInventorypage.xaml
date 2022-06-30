@@ -39,12 +39,35 @@
         <TextBlock  Grid.Column="1" Grid.Row="2" Text="Store Inventory" Foreground="white" VerticalAlignment="Center" FontSize="24" TextAlignment="Center"/>
 
         <StackPanel  Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBox Text="Search for product" Background="white" Foreground="Gray" Margin="10" Height="31" Width="150" TextAlignment="left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Button Content="Search" Background="{x:Null}" Foreground="white" VerticalAlignment="Center" Margin="10" BorderBrush="white" FontWeight="Light" BorderThickness=".5" Width="50" Height="31"/>
+            <TextBox x:Name="searchbox" Text="Search for product" Background="white" Foreground="Gray" Margin="10" Height="31" Width="150" TextAlignment="left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button x:Name="searchButton" Content="Search" Background="{x:Null}" Foreground="white" VerticalAlignment="Center" Margin="10" BorderBrush="white" FontWeight="Light" BorderThickness=".5" Width="50" Height="31" Click="searchButton_Click"/>
         </StackPanel>
 
         <!-- Row 3-->
-        <ListBox x:Name="StoreInventory" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding _Items}" FontSize="18" >
+        <ListBox x:Name="SearchResults" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Searchlist}" FontSize="18" Margin="10" >
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="storesearch">
+                    <StackPanel x:Name="searchtext" Orientation="Horizontal">
+
+                        <TextBlock Text="Name: "/>
+                        <TextBox x:Name="nameBox" Text="{Binding Product.Name}"  IsReadOnly="True"/>
+                        <TextBlock Text="  "/>
+                        <TextBlock Text="ID: "/>
+                        <TextBlock Text="{Binding Product.Id}"/>
+
+                        <TextBlock Text="                    "/>
+
+                        <TextBlock Text="Quantity: " TextAlignment="Right" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="quantityBox" Text="{Binding Quantity}" TextAlignment="Right" HorizontalAlignment="Right" IsReadOnly="True"/>
+                        <TextBlock Text="Price: " TextAlignment="Right"/>
+                        <TextBox x:Name="priceBox" Text="{Binding Product.Price, StringFormat=C}" TextAlignment="Right"  IsReadOnly="True"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <ListBox x:Name="StoreInventory" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding _Items}" FontSize="18" >
             <ListBox.ItemTemplate>
                 <DataTemplate x:Name="storeinv">
                     <StackPanel x:Name="storetext" Orientation="Horizontal">
@@ -69,20 +92,22 @@
 
         <!-- Row 4-->
         
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4" Margin="10" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5" Margin="10" HorizontalAlignment="Center">
            
             <Button x:Name="deleteButton" Content="Delete" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="deleteButton_Click"/>
             <Button x:Name="editButton" Content="Edit" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="editButton_Click"/>
+            <Button x:Name="quantitySortButton" Content="Sort By Quantity" Height="25" Width="95" Background="#FF684DEC" Foreground="White" Margin="10" Click="quantitySortButton_Click"/>
+            <Button x:Name="priceSortButton" Content="Sort By Price" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="priceSortButton_Click"/>
             
         </StackPanel>
 
         <!-- Row 5-->
         
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="Add New Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="Add New Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
 
         <!-- Row 6-->
         
-        <StackPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="7" HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBlock Text="Name:" FontSize="16" Margin="10"/>
             <TextBox x:Name="newNamebox" MinHeight="25" MinWidth="100" Margin="10"/>
             <TextBlock Text="Id:" FontSize="16" Margin="10"/>
@@ -95,15 +120,15 @@
 
         <!-- Row 7-->
         
-        <Button Grid.Column="1" Grid.Row="7" x:Name="addButton" Content="Add" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" HorizontalAlignment="Center" Click="addButton_Click"/>
+        <Button Grid.Column="1" Grid.Row="8" x:Name="addButton" Content="Add" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" HorizontalAlignment="Center" Click="addButton_Click"/>
 
         <!-- Row 8-->
         
-        <TextBlock Grid.Column="1" Grid.Row="8" Text="Edit Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
+        <TextBlock Grid.Column="1" Grid.Row="9" Text="Edit Product" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold"/>
 
         <!-- Row 9-->
 
-        <StackPanel Grid.Column="1" Grid.Row="9" HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Grid.Row="10" HorizontalAlignment="Center" Orientation="Horizontal">
             <TextBlock Text="Name:" FontSize="16" Margin="10"/>
             <TextBox x:Name="editNamebox" MinHeight="25" MinWidth="100" Margin="10"/>
             <TextBlock Text="Id:" FontSize="16" Margin="10"/>
@@ -114,7 +139,7 @@
             <TextBox x:Name="editQuantitybox" MinHeight="25" MinWidth="100" Margin="10"/>
         </StackPanel>
 
-        <Button Grid.Column="1" Grid.Row="10" x:Name="saveButton" Content="Save" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="saveButton_Click"/>
+        <Button Grid.Column="1" Grid.Row="11" x:Name="saveButton" Content="Save" Height="25" Width="85"  Margin="10" Click="saveButton_Click"/>
 
 
     </Grid>

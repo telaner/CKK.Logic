@@ -10,16 +10,18 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.IO;
 using CKK.Logic.Exceptions;
+using System.Collections.ObjectModel;
 
 namespace CKK.Persistance.Models
 {
     public class FileStore : IStore, ISavable, ILoadable
     {
         private List<StoreItem> Items;
+        
         public readonly string FilePath = @"C:\Users\risee\Documents\School Otech\Structured project 1\CKK.Logic" + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
 
         
-        private int Idcounter = 0;
+        private int IdCounter = 0;
 
         static void Main() { }
 
@@ -44,7 +46,7 @@ namespace CKK.Persistance.Models
                 if (newitem.Product.Id <= 0)
                 {
 
-                    newitem.Product.Id = ++Idcounter;
+                    newitem.Product.Id = ++IdCounter;
                 }
 
 
@@ -126,8 +128,65 @@ namespace CKK.Persistance.Models
 
         public void Load()
         {
-            
-            using( var fsOpen = new FileStream(FilePath,FileMode.Open, FileAccess.Read))
+            FileStream stream = new(FilePath+"StoreItems.dat", FileMode.OpenOrCreate, FileAccess.Read);
+
+
+
+            try
+
+            {
+
+                BinaryFormatter formatter = new BinaryFormatter();
+
+                Items = (List<StoreItem>)formatter.Deserialize(stream);
+
+                IdCounter = Items.Count + 1;
+
+                foreach (var item in Items)
+
+                {
+
+                    if (item.Product.Id == 0)
+
+                    {
+
+                        item.Product.Id = IdCounter;
+
+                    }
+
+                }
+
+
+
+            }
+
+            catch (IOException e)
+
+            {
+
+                throw new IOException("There has been an error opening the file to load data", e);
+
+            }
+
+            catch (SerializationException ex)
+
+            {
+
+                Items = new();
+
+                //throw new SerializationException("There was a problem deserializing the data: " + ex.Message, ex);
+
+            }
+
+            finally
+
+            {
+
+                stream?.Dispose();
+
+            }
+
+            using ( var fsOpen = new FileStream(FilePath,FileMode.Open, FileAccess.Read))
             {
                 BinaryFormatter reader = new BinaryFormatter();
                 Items = (List<StoreItem>)reader.Deserialize(fsOpen);
@@ -138,20 +197,122 @@ namespace CKK.Persistance.Models
 
         public void Save()
         {
-            var filename = File.Create("StoreItems.dat");
-            string filepath = Path.Combine(FilePath, filename.ToString());
-            using (var fsitems = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+            FileStream stream = new FileStream(FilePath+File.Create("StoreItems.dat"), FileMode.OpenOrCreate, FileAccess.Write);
+            try
+
             {
+
                 BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fsitems, Items);
+
+                formatter.Serialize(stream, Items);
+
             }
-                        
+            catch (IOException e)
+            {
+                throw new IOException("There was a problem writing to the file", e);
+            }
+            catch (SerializationException ex) 
+            {
+                throw new SerializationException("There was a problem serializing the data: " + ex.Message, ex);
+            }
+            finally
+
+            {
+
+                stream?.Dispose();
+
+            }
+                                    
         }
 
         public void CreatePath()
         {
-            Directory.CreateDirectory(FilePath);
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "Persistance");
           
+        }
+
+        public ObservableCollection<StoreItem> GetAllProductsByName(ObservableCollection<StoreItem> products, string name)
+        {
+
+            var productnames = from item in products
+                               select item.Product.Name;
+            string[] productarray = productnames.ToArray();
+
+            Array.Sort(productarray);
+            ArrayToLower(productarray);
+
+            string nameLower = name.ToLower();
+
+
+            int firstindex = 0;
+            int lastindex = productarray.Length - 1;
+
+
+            while (firstindex <= lastindex)
+            {
+                int middle = (firstindex + lastindex) / 2;
+                int result = nameLower.CompareTo(productarray[middle]);
+
+
+                if (result == 0)
+                {
+
+
+                    var Findbyname = from Item in products
+                                     where Item.Product.Name.Contains(nameLower)
+                                     select Item;
+
+                    var namelist = new ObservableCollection<StoreItem>(Findbyname);
+                    return namelist;
+
+                }
+                else if (result > 0)
+                {
+                    firstindex = middle + 1;
+                }
+                else
+                {
+                    lastindex = middle - 1;
+                }
+
+            }
+            return null;
+
+
+
+
+
+
+        }
+
+
+        public ObservableCollection<StoreItem> GetAllProductsByQuantity(ObservableCollection<StoreItem> products)
+        {
+            var quantitySort = 
+                from item in products
+                orderby item.Quantity
+                select item;
+            var quantitySortList = new ObservableCollection<StoreItem>(quantitySort);
+            return quantitySortList;
+        }
+        public ObservableCollection<StoreItem> GetAllProductsByPrice(ObservableCollection<StoreItem> items) 
+        {
+            var priceSort = 
+                from item in items
+                orderby item.Product.Price
+                select item;
+            var priceSortlist = new ObservableCollection<StoreItem>(priceSort);
+            return priceSortlist;
+
+        }
+        //This should return a List<StoreItems> that are sorted by Price. (highest to lowest)
+
+        private static void ArrayToLower(string[] data) 
+        {
+            for (int i = 0; i < data.Length; i++) 
+            {
+                data[i] = data[i].ToLower();
+            }
         }
     }
 }

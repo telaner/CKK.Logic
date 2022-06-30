@@ -25,9 +25,12 @@ namespace CKK.UI.Views
     /// </summary>
     public partial class StoreInventorypage : Window
     {
-        private FileStore _Store;
+        public FileStore _Store;
 
         public ObservableCollection<StoreItem> _Items { get; private set; }
+        public ObservableCollection<StoreItem> Searchlist { get; private set; }
+        public ObservableCollection<StoreItem> QuantityList { get; private set; }
+        public ObservableCollection<StoreItem> Pricelist { get; private set; }
 
         public int StoreIdcounter = 0;
 
@@ -58,11 +61,7 @@ namespace CKK.UI.Views
 
         }
        
-        private void RefreshList()
-        {
-            _Items.Clear();
-            foreach(StoreItem si in new ObservableCollection<StoreItem>(_Store.GetStoreItems()))_Items.Add(si);
-        }
+       
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
@@ -117,6 +116,39 @@ namespace CKK.UI.Views
             editQuantitybox.Clear();
 
             _Store.Save();
+        }
+
+       
+
+        private void searchButton_Click(object sender, RoutedEventArgs e)
+        {
+           
+            string searchkey = searchbox.Text;
+            Searchlist = _Store.GetAllProductsByName(_Items, searchkey);
+            SearchResults.ItemsSource = Searchlist;
+
+        }
+
+        private void quantitySortButton_Click(object sender, RoutedEventArgs e)
+        {
+            StoreInventory.ItemsSource = "";
+            _Store.GetAllProductsByQuantity(_Items);
+            QuantityList = _Store.GetAllProductsByQuantity(_Items);
+            _Items = QuantityList;
+            StoreInventory.ItemsSource = _Items;
+           
+
+        }
+
+        private void priceSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            StoreInventory.ItemsSource = "";
+            _Store.GetAllProductsByPrice(_Items);
+            Pricelist = _Store.GetAllProductsByPrice(_Items);
+            _Items = Pricelist;
+            StoreInventory.ItemsSource = _Items;
+            
+
         }
     }
 }
