@@ -233,55 +233,42 @@ namespace CKK.Persistance.Models
 
         public ObservableCollection<StoreItem> GetAllProductsByName(ObservableCollection<StoreItem> products, string name)
         {
-
             var productnames = from item in products
                                select item.Product.Name;
             string[] productarray = productnames.ToArray();
-
-            Array.Sort(productarray);
             ArrayToLower(productarray);
-
             string nameLower = name.ToLower();
 
-
-            int firstindex = 0;
-            int lastindex = productarray.Length - 1;
-
-
-            while (firstindex <= lastindex)
+            for (var index = 0; index < productarray.Length; ++index)
             {
-                int middle = (firstindex + lastindex) / 2;
-                int result = nameLower.CompareTo(productarray[middle]);
-
-
-                if (result == 0)
+                if (productarray[index] == name)
                 {
-
-
                     var Findbyname = from Item in products
-                                     where Item.Product.Name.Contains(nameLower)
+                                     where Item.Product.Name.ToLower().Contains(nameLower)
+                                     orderby Item.Product.Name
+                                     select Item;
+
+                    var namelist = new ObservableCollection<StoreItem>(Findbyname);
+                    return namelist;
+
+
+                }
+
+                else 
+                {
+                    var Findbyname = from Item in products
+                                     where Item.Product.Name.ToLower().Contains(nameLower)
+                                     orderby Item.Product.Name
                                      select Item;
 
                     var namelist = new ObservableCollection<StoreItem>(Findbyname);
                     return namelist;
 
                 }
-                else if (result > 0)
-                {
-                    firstindex = middle + 1;
-                }
-                else
-                {
-                    lastindex = middle - 1;
-                }
-
             }
             return null;
 
-
-
-
-
+           
 
         }
 
