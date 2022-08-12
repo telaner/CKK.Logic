@@ -45,14 +45,21 @@ namespace CKK.UI.Views
         public StoreInventorypage(FileStore store)
         {
             _Store = store;
-            InitializeComponent();
+
             
-            _Items = new ObservableCollection<StoreItem>();
+
+            InitializeComponent();
+
+            
+            _Items = new ObservableCollection<StoreItem>(_Store.Items);
 
             _Items.Add(new StoreItem(pearlnecklace, 6));
             _Items.Add(new StoreItem(goldring, 3));
             _Items.Add(new StoreItem(pearlearrings, 5));
             _Items.Add(new StoreItem(diamondearrings, 4));
+
+            _Store.Items = new List<StoreItem>(_Items);
+            _Store.Save();
 
             StoreInventory.ItemsSource = _Items;
             
@@ -71,7 +78,7 @@ namespace CKK.UI.Views
             _Items.Add(new StoreItem(newprod, int.Parse(newQuantitybox.Text)));
 
             _Store.AddStoreItem(newprod, int.Parse(newQuantitybox.Text));
-
+            _Store.Items = new List<StoreItem>(_Items);
             _Store.Save();
 
 
@@ -101,6 +108,8 @@ namespace CKK.UI.Views
             editQuantitybox.Text = edititem.Quantity.ToString();
 
             _Items.Remove((StoreItem)StoreInventory.SelectedItem);
+
+           
 
 
 

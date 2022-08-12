@@ -16,12 +16,18 @@ namespace CKK.Persistance.Models
 {
     public class FileStore : IStore, ISavable, ILoadable
     {
-        private List<StoreItem> Items;
+        public List<StoreItem> Items;
         
-        public readonly string FilePath = @"C:\Users\risee\Documents\School Otech\Structured project 1\CKK.Logic" + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
+        public readonly string FilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + Path.DirectorySeparatorChar + "Persistance" + Path.DirectorySeparatorChar + "StoreItems.dat";
 
+        public List<RecordSerializable> saveList { get; set; }
+        public List<RecordSerializable> recordList { get; set; }
+        
         
         private int IdCounter = 0;
+
+       
+        private StoreItem[] storeItems;
 
         static void Main() { }
 
@@ -29,6 +35,7 @@ namespace CKK.Persistance.Models
         {
             CreatePath();
             Items = new List<StoreItem>();
+            
         }
         public StoreItem AddStoreItem(Product prod, int quantity)
         {
@@ -127,103 +134,137 @@ namespace CKK.Persistance.Models
         }
 
         public void Load()
-        {
-            FileStream stream = new(FilePath+"StoreItems.dat", FileMode.OpenOrCreate, FileAccess.Read);
-
-
-
-            try
-
+        { using (FileStream loadingData = new FileStream(FilePath, FileMode.OpenOrCreate, FileAccess.Read))
             {
 
-                BinaryFormatter formatter = new BinaryFormatter();
+                BinaryFormatter reader = new BinaryFormatter();
+                                
 
-                Items = (List<StoreItem>)formatter.Deserialize(stream);
-
-                IdCounter = Items.Count + 1;
-
-                foreach (var item in Items)
-
+                if (loadingData.Length > 0)
                 {
+                    
 
-                    if (item.Product.Id == 0)
-
+                    while (loadingData.Position != loadingData.Length)
                     {
-
-                        item.Product.Id = IdCounter;
+                        RecordSerializable record = (RecordSerializable)reader.Deserialize(loadingData);
+                        Items.Add (new StoreItem (new Product { Id= record.Id, Name = record.Name, Price = record.Price}, record.Quantity));
 
                     }
 
                 }
 
-
-
+                loadingData.Close();
             }
 
-            catch (IOException e)
 
-            {
 
-                throw new IOException("There has been an error opening the file to load data", e);
+            //try
 
-            }
+            //{
 
-            catch (SerializationException ex)
+            //    BinaryFormatter formatter = new BinaryFormatter();
 
-            {
+            //    Items = (List<StoreItem>)formatter.Deserialize(stream);                               
 
-                Items = new();
+            //    IdCounter = Items.Count + 1;
 
-                //throw new SerializationException("There was a problem deserializing the data: " + ex.Message, ex);
+            //    foreach (var item in Items)
+            //    {
+            //        if (item.Product.Id == 0)
+            //        {
+            //            item.Product.Id = ++IdCounter;
+            //        }
+            //    }
 
-            }
+            //}
 
-            finally
+            //catch (IOException e)
+            //{
+            //    throw new IOException("There has been an error opening the file to load data", e);
+            //}
 
-            {
+            //catch (SerializationException ex)
+            //{
+            //    Items = new();
+            //}
 
-                stream?.Dispose();
-
-            }
-
-            using ( var fsOpen = new FileStream(FilePath,FileMode.Open, FileAccess.Read))
-            {
-                BinaryFormatter reader = new BinaryFormatter();
-                Items = (List<StoreItem>)reader.Deserialize(fsOpen);
-            }
-           
+            //finally
+            //{
+            //    stream?.Dispose();
+            //}                     
         }
 
 
         public void Save()
         {
-            FileStream stream = new FileStream(FilePath+File.Create("StoreItems.dat"), FileMode.OpenOrCreate, FileAccess.Write);
-            try
+            FileStream stream = new FileStream(FilePath, FileMode.OpenOrCreate, FileAccess.Write);
+            BinaryFormatter writer = new BinaryFormatter();
 
+
+            if (Items != null)
             {
-
-                BinaryFormatter formatter = new BinaryFormatter();
-
-                formatter.Serialize(stream, Items);
-
-            }
-            catch (IOException e)
-            {
-                throw new IOException("There was a problem writing to the file", e);
-            }
-            catch (SerializationException ex) 
-            {
-                throw new SerializationException("There was a problem serializing the data: " + ex.Message, ex);
-            }
-            finally
-
-            {
-
-                stream?.Dispose();
-
-            }
+                try
+                {
                                     
+                    
+                        storeItems = Items.ToArray();
+
+                        foreach (StoreItem item in storeItems)
+                        {
+                            
+                           var value = new RecordSerializable(item.Product.Name, item.Product.Id, item.Product.Price, item.Quantity);
+                                
+                           writer.Serialize(stream, value);
+
+                            
+                        }
+                                
+
+                }
+
+                catch (IOException ex)
+                {
+                    throw new IOException("There was a problem writing to the file", ex);
+                }
+                catch (SerializationException ex)
+                {
+                    throw new SerializationException("There was a problem serializing the data: " + ex.Message, ex);
+                }
+                finally
+                {
+                    stream?.Dispose();
+                }
+            }
         }
+
+
+                //FileStream stream = new FileStream(FilePath, FileMode.OpenOrCreate, FileAccess.Write);
+                //try
+
+                //{
+
+                //    BinaryFormatter formatter = new BinaryFormatter();
+
+                //    formatter.Serialize(stream, Items);
+
+                //}
+                //catch (IOException e)
+                //{
+                //    throw new IOException("There was a problem writing to the file", e);
+                //}
+                //catch (SerializationException ex) 
+                //{
+                //    throw new SerializationException("There was a problem serializing the data: " + ex.Message, ex);
+                //}
+                //finally
+
+                //{
+
+                //    stream?.Dispose();
+
+                //}
+
+                
 
         public void CreatePath()
         {

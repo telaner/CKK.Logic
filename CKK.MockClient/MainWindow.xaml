@@ -1,0 +1,126 @@
+﻿<Window x:Class="CKK.MockClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CKK.MockClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <!-- Row 1-->
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3">
+            <TextBox x:Name="header" IsReadOnly="True" Text="Corey's Knick Knacks" FontSize="24" Background="#FF4047B3" TextAlignment="Center" Foreground="White" VerticalContentAlignment="Center" Width="320" />
+            <Image Source = "C:\Users\risee\Documents\School Otech\Structured Project III\headerimage.jpg" MaxHeight="75" Stretch="UniformToFill" Margin="10,0,0,0" Width="433"/>
+        </StackPanel>
+
+        <!-- Row 2-->
+        
+        <Rectangle Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,10,0,10" Height="55" Width="760" Fill="#FF4047B3"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+            <TextBlock Text="Customer ID" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Center"/>
+            <TextBox x:Name="custIdBox" Height="15" MinWidth="30" IsReadOnly="True" HorizontalAlignment="Left" Margin="10" Text="{Binding custidcounter}"/>
+                      
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="Shopping Cart Id" VerticalAlignment="Center" Margin="10"/>
+            <TextBox x:Name="cartIdBox" Height="15" MinWidth="30" IsReadOnly="True" HorizontalAlignment="Left" Margin="10" Text="{Binding shopcartid}"/>
+            
+        </StackPanel>
+        
+
+
+        <TextBlock  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Text="Store" Foreground="white" VerticalAlignment="Center" FontSize="24" TextAlignment="Center"/>
+
+
+
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical" Margin="10">
+            
+            <TextBlock Text="Store Products" FontSize="25" HorizontalAlignment="Center" Margin="10"/>
+            <ListBox x:Name="StoreInventory" ItemsSource="{Binding _Items}" FontSize="12" MinHeight="100" >
+            <ListBox.ItemTemplate>
+                <DataTemplate x:Name="storeinv">
+                    <StackPanel x:Name="storetext" Orientation="Horizontal">
+
+                        <TextBlock Text="Name: "/>
+                        <TextBox x:Name="nameBox" Text="{Binding Product.Name}"  IsReadOnly="True"/>
+                                                
+                        <TextBlock Text="                    "/>
+
+                        <TextBlock Text="Quantity: " TextAlignment="Right" HorizontalAlignment="Right"/>
+                        <TextBox x:Name="quantityBox" Text="{Binding Quantity}" TextAlignment="Right" HorizontalAlignment="Right" IsReadOnly="True"/>
+                        <TextBlock Text="Price: " TextAlignment="Right"/>
+                        <TextBox x:Name="priceBox" Text="{Binding Product.Price, StringFormat=C}" TextAlignment="Right"  IsReadOnly="True"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+            
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="3" Grid.Row="3" Margin="10">
+            <TextBlock Text="Shopping Cart" FontSize="25" HorizontalAlignment="Center" Margin="10"/>
+            <ListBox x:Name="ShoppingCart" ItemsSource="{Binding _Items}" FontSize="12" MinHeight="100" MinWidth="200">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:Name="shopcart">
+                        <StackPanel x:Name="storetext" Orientation="Horizontal">
+
+                            <TextBlock Text="Name: "/>
+                            <TextBox x:Name="nameBox" Text="{Binding Product.Name}"  IsReadOnly="True"/>
+                            
+                            <TextBlock Text="                    "/>
+
+                            <TextBlock Text="Quantity: " TextAlignment="Right" HorizontalAlignment="Right"/>
+                            <TextBox x:Name="quantityBox" Text="{Binding Quantity}" TextAlignment="Right" HorizontalAlignment="Right" IsReadOnly="True"/>
+                            <TextBlock Text="Price: " TextAlignment="Right"/>
+                            <TextBox x:Name="priceBox" Text="{Binding Product.Price, StringFormat=C}" TextAlignment="Right"  IsReadOnly="True"/>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Margin="10" Grid.Row="3" Grid.Column="2">
+            <TextBlock Text="Quantity" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Margin="10"/>
+            <TextBox x:Name="quantityBox" MinHeight="15" MinWidth="10"/>
+
+            <Button x:Name="addButton" Content="Add To Shopping Cart" Background="#FF684DEC" Foreground="White" Margin="10" Click="addButton_Click"/>
+            <Button x:Name="removeButton" Content="Remove From Shopping Cart" Background="#FF684DEC" Foreground="White" Margin="10" Click="removeButton_Click"/>
+            <Button x:Name="submitButton" Content="Check out" Background="#FF684DEC" Foreground="White" Margin="10" Click="submitButton_Click"/>
+        </StackPanel>
+
+        <DockPanel>
+            <StatusBar Name="cartStatus" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                <StatusBarItem>
+                    
+                </StatusBarItem>
+            </StatusBar>
+        </DockPanel>
+
+    </Grid>
+</Window>
