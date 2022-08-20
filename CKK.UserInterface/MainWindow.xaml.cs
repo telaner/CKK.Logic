@@ -1,9 +1,4 @@
-﻿using Caliburn.Micro;
-using CKK.Logic.Interfaces;
-using CKK.Logic.Models;
-using CKK.Logic.Repository.Implementation;
-using CKK.Persistance.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,31 +10,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CKK.UI.Views
+namespace CKK.UserInterface
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class MainWindow : Window
     {
-        
-        public ShellView()
+        public MainWindow()
         {
-            
             InitializeComponent();
         }
-       
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //DataStore store = (DataStore)Application.Current.FindResource("globStore");
-            
+
             StoreInventorypage inventorypage = new StoreInventorypage();
             inventorypage.Show();
             this.Close();
-            
+
         }
     }
 }

@@ -8,7 +8,7 @@ using CKK.Logic.Exceptions;
 
 namespace CKK.Logic.Models
 {
-    public class Store : Interfaces.Entity, Interfaces.IStore
+    public class Store : Interfaces.Entity
     {
 
         private List<StoreItem> Items;

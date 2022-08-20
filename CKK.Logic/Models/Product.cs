@@ -9,31 +9,13 @@ using CKK.Logic.Exceptions;
 namespace CKK.Logic.Models
 {
     [Serializable]
-    public class Product : Entity
+    public class Product
     {
-        private decimal _price;
-
-        public decimal Price
-        {
-            get
-            {
-                return _price;
-            }
-            set
-            {
-                if (value >= 0)
-                {
-                    _price = value;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value), "Must be greater than 0.");
-                }
-            }
-        }
-
-        public Product() : base() { }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public int cartCount { get; set; }
 
     }
 }

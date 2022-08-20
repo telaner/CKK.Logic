@@ -14,7 +14,7 @@ using System.Collections.ObjectModel;
 
 namespace CKK.Persistance.Models
 {
-    public class FileStore : IStore, ISavable, ILoadable
+    public class FileStore : ISavable, ILoadable
     {
         public List<StoreItem> Items;
         

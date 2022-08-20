@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:Logic ="clr-namespace:CKK.Logic.Models;assembly=CKK.Logic"
              xmlns:Persistance ="clr-namespace:CKK.Persistance.Models;assembly=CKK.Persistance"
+             xmlns:Implementation ="clr-namespace:CKK.Logic.Repository.Implementation;assembly=CKK.Logic"
              xmlns:local="clr-namespace:CKK.UI"
              StartupUri="ShellView.xaml">
 
     <Application.Resources>
-        <Persistance:FileStore x:Key="globStore"></Persistance:FileStore>
+        <Implementation:DataStore x:Key="globStore"></Implementation:DataStore>
+        
+
     </Application.Resources>
+    
+    
     
 </Application>

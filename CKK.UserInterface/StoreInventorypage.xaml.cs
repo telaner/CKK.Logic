@@ -1,6 +1,8 @@
 ﻿using CKK.Logic.Models;
+using CKK.Logic.Repository.Implementation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,21 +14,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Caliburn.Micro;
-using CKK.Logic.Interfaces;
-using System.Collections.ObjectModel;
-using CKK.Persistance.Models;
-using System.IO;
-using CKK.Logic.Repository.Implementation;
 
-namespace CKK.UI.Views
+namespace CKK.UserInterface
 {
     /// <summary>
     /// Interaction logic for StoreInventorypage.xaml
     /// </summary>
     public partial class StoreInventorypage : Window
     {
-        public DataStore _Store;
+
+
+        public ProductRepository _Store = new ProductRepository();
 
         public ObservableCollection<Product> _Items { get; private set; }
         public ObservableCollection<Product> Searchlist { get; private set; }
@@ -37,65 +35,52 @@ namespace CKK.UI.Views
 
 
 
-        Product pearlnecklace = new Product { Name = "Pearl Necklace", Id = 123, Price = 65.00m, Quantity = 6 };
-        Product goldring = new Product{ Name = "Gold Ring", Id = 321, Price = 200.00m, Quantity = 3};
-        Product pearlearrings = new Product{ Name = "Pearl Earrings", Id = 122, Price = 50.00m, Quantity = 5};
-        Product diamondearrings = new Product{ Name = "Diamond Earrings", Id = 322, Price = 65.00m, Quantity = 4};
-        
+       
 
         public StoreInventorypage()
         {
-            
-            DatabaseConnectionFactory db = new DatabaseConnectionFactory();
-            
 
             InitializeComponent();
 
-            _Store.AddProduct(pearlnecklace);
-            _Store.AddProduct(goldring);
-            _Store.AddProduct(pearlearrings);
-            _Store.AddProduct(diamondearrings);
 
-            _Items = new ObservableCollection<Product>((IEnumerable<Product>)_Store.GetAllProducts());
-
-
-            StoreInventory.ItemsSource = _Items;
+            UpdateBinding();
 
         }
 
+        private void UpdateBinding() 
+        {
+            var items = _Store.GetAll().ToList();
 
+            _Items = new ObservableCollection<Product>(items);
 
-       
-       
-
+            StoreInventory.ItemsSource = _Items;
+        }
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            
-            Product newprod = new Product { Name = newNamebox.Text, Id = int.Parse(newIdbox.Text), Price=decimal.Parse(newPricebox.Text), Quantity = int.Parse(newQuantitybox.Text) };
-            
 
-            _Store.AddProduct(newprod);
-            
-            //_Store.Items = new List<StoreItem>(_Items);
-            //_Store.Save();
+            Product newprod = new Product { Name = newNamebox.Text, Price = decimal.Parse(newPricebox.Text), Quantity = int.Parse(newQuantitybox.Text) };
 
+
+            _Store.Add(newprod);
+
+
+            
+            UpdateBinding();
 
             newNamebox.Clear();
             newIdbox.Clear();
             newPricebox.Clear();
             newQuantitybox.Clear();
 
-            
-
         }
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             Product product = (Product)StoreInventory.SelectedItem;
-            _Store.DeleteProduct(product.Id);
+            _Store.Remove(product);
+
+            UpdateBinding();
             
-            //_Store.Save();
         }
 
         private void editButton_Click(object sender, RoutedEventArgs e)
@@ -107,7 +92,9 @@ namespace CKK.UI.Views
             editPricebox.Text = edititem.Price.ToString();
             editQuantitybox.Text = edititem.Quantity.ToString();
 
-            _Store.DeleteProduct(edititem.Id);
+            _Store.Remove(edititem);
+
+            UpdateBinding();
 
         }
 
@@ -120,16 +107,16 @@ namespace CKK.UI.Views
             editPricebox.Clear();
             editQuantitybox.Clear();
 
-            
+
         }
 
-       
+
 
         private void searchButton_Click(object sender, RoutedEventArgs e)
         {
-           
+
             string searchkey = searchbox.Text;
-            var searchList = _Store.GetProductsByName(searchkey);
+            var searchList = _Store.GetItemsByName(searchkey);
             Searchlist = new ObservableCollection<Product>(searchList);
             SearchResults.ItemsSource = Searchlist;
 
@@ -142,7 +129,7 @@ namespace CKK.UI.Views
             //QuantityList = _Store.GetAllProductsByQuantity(_Items);
             //_Items = QuantityList;
             //StoreInventory.ItemsSource = _Items;
-           
+
 
         }
 
@@ -153,7 +140,7 @@ namespace CKK.UI.Views
             //Pricelist = _Store.GetAllProductsByPrice(_Items);
             //_Items = Pricelist;
             //StoreInventory.ItemsSource = _Items;
-            
+
 
         }
     }

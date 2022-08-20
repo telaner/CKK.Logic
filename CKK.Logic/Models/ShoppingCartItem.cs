@@ -10,6 +10,10 @@ namespace CKK.Logic.Models
     [Serializable]
     public class ShoppingCartItem : InventoryItem
     {
+        public int ShoppingCartId { get; set; }
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
         
         public ShoppingCartItem(Product product, int quantity) : base(product, quantity) { }     
         

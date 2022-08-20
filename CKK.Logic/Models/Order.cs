@@ -9,6 +9,7 @@ namespace CKK.Logic.Models
     public class Order
     {
         public int OrderID { get; set; }
+        public string OrderNumber { get; set; }
         public int ShoppingCartId { get; set; }
 
     }
