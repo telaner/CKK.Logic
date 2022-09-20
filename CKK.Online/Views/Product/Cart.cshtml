@@ -1,0 +1,60 @@
+﻿@model List<CKK.Logic.Models.ShoppingCartItem>
+
+@{
+    ViewData["Title"] = "ShoppingCarts";
+    }
+
+ @{
+    int cartId = 1;
+}   
+
+<form asp-action="Add" enctype="multipart/form-data"  method="post">
+    <h1>Shopping Cart</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Shopping Cart Id</th>
+                <th>Customer Id</th>
+                <th>Product Id</th>
+                <th>Quanity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ShoppingCartId</td>
+                    <td>
+                        @item.CustomerId
+                    </td>
+                    <td>
+                        @item.Product.Name
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                     <td>
+                        @item.Product.Price
+
+                    </td>
+                     <td>
+                        @item.Product.GetTotal()
+
+                    </td>
+                    <td>
+                         <a asp-action="Remove" class="btn btn-primary" asp-route-id="@item.ProductId">Remove </a>
+                    </td>
+                </tr>
+            }
+
+
+            <td>
+
+            <a asp-action="Order" class="btn btn-primary" asp-route-id="@cartId">Check Out </a>
+            </td>
+        </tbody>
+    </table>
+</form>

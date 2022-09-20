@@ -15,7 +15,11 @@ namespace CKK.Logic.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public int cartCount { get; set; }
+        public int CartCount { get; set; }
+        public decimal GetTotal() 
+        {
+            return Price * Quantity;
+        }
 
     }
 }

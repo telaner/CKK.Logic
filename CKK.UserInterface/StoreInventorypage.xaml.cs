@@ -1,5 +1,6 @@
 ﻿using CKK.Logic.Models;
 using CKK.Logic.Repository.Implementation;
+using CKK.Logic.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +25,10 @@ namespace CKK.UserInterface
     {
 
 
-        public ProductRepository _Store = new ProductRepository();
+        private static readonly IConnectionFactory factory = new DatabaseConnectionFactory();
+
+        public ProductRepository _Store = new ProductRepository(factory); 
+        
 
         public ObservableCollection<Product> _Items { get; private set; }
         public ObservableCollection<Product> Searchlist { get; private set; }

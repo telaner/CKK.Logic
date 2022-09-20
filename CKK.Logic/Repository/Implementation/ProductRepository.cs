@@ -13,97 +13,86 @@ namespace CKK.Logic.Repository.Implementation
 {
     public class ProductRepository : IProductRepository
     {
-        
-        
-        
+        private readonly IConnectionFactory _connectionFactory;
         private readonly string _tableName = "Products";
-
-        public ProductRepository() 
+        public ProductRepository(IConnectionFactory connectionFactory)
         {
-           
+            _connectionFactory = connectionFactory;
         }
-
-        public void Add(Product item)
+        public void Add(Product entity)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB"))) 
+            using (var conn = _connectionFactory.GetConnection)
             {
                 List<Product> products = new List<Product>();
-                products.Add(item);
-                connection.Execute("dbo.Product_Insert @Price, @Quantity, @Name", products);
+                products.Add(entity);
+                SqlMapper.Execute(conn, "dbo.Product_Insert @Price, @Quantity, @Name", products);
             }
         }
-
         public Product Find(int id)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            using (var conn = _connectionFactory.GetConnection)
             {
-                var query = SqlMapper.QuerySingleOrDefault<Product>(connection, $"SELECT * FROM {_tableName} WHERE Id = @ID", new {Id = id});
-                if (query == null)
+
+                var result = SqlMapper.QuerySingleOrDefault<Product>(conn, $"SELECT * FROM {_tableName} WHERE Id=@Id", new { Id = id });
+                if (result == null)
                     throw new KeyNotFoundException($"{_tableName} with id [{id}] could not be found.");
-                return query;
+                return result;
             }
         }
-
-        public IEnumerable<Product> GetItemsByName(string name)
-        {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
-            {
-                var query = SqlMapper.Query<Product>(connection, $"SELECT * FROM {_tableName} WHERE Name like '%' + @Name + '%'", new {Name = name});
-                if (query == null)
-                    throw new KeyNotFoundException($"{_tableName} with name [{name}] could not be found.");
-                return query;
-            }
-        }
-
         public IEnumerable<Product> GetAll()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            using (var conn = _connectionFactory.GetConnection)
             {
-                var output = connection.Query<Product>( $"SELECT * FROM {_tableName}");
-                return output;
+                var result = SqlMapper.Query<Product>(conn, $"SELECT * FROM {_tableName}");
+                return result;
+
             }
         }
-
+        public IEnumerable<Product> GetItemsByName(string name)
+        {
+            using (var conn = _connectionFactory.GetConnection)
+            {
+ 
+                var result = SqlMapper.Query<Product>(conn, $"SELECT * FROM {_tableName} WHERE Name like '%' +  @Name + '%'", new { Name = name });
+                if (result == null)
+                    throw new KeyNotFoundException($"{_tableName} with name [{name}] could not be found.");
+                return result;
+            }
+        }
         public IEnumerable<Product> GetItemsByPrice(decimal price)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            using (var conn = _connectionFactory.GetConnection)
             {
-                return SqlMapper.Query<Product>(connection, $"SELECT * FROM {_tableName} WHERE Price =@Price", new { Price = price });
+                return SqlMapper.Query<Product>(conn, $"SELECT * FROM {_tableName} WHERE Price = @price", new { price = price });
             }
         }
-
         public IEnumerable<Product> GetItemsByQuantity(int quantity)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            using (var conn = _connectionFactory.GetConnection)
             {
-                return SqlMapper.Query<Product>(connection, $"SELECT * FROM {_tableName} WHERE Quantity =@Quantity", new { Qauntity = quantity });
+                return SqlMapper.Query<Product>(conn, $"SELECT * FROM {_tableName} WHERE quantity = @quantity", new { quantity = quantity });
             }
         }
-
-        public void Remove(Product item)
+        public void Remove(Product entity)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            using (var conn = _connectionFactory.GetConnection)
             {
-                SqlMapper.Execute(connection, $"DELETE FROM {_tableName} WHERE Id = @Id", new {Id = item.Id});
+                SqlMapper.Execute(conn, $"DELETE FROM {_tableName} WHERE Id=@Id", new { Id = entity.Id });
             }
         }
-
-        public void Update(Product item)
+        public void Update(Product entity)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(DatabaseConnectionFactory.CnnVal("StructuredProjectDB")))
+            var query = "UPDATE Products SET Name = @Name, Price = @Price, Quantity = @Quantity WHERE Id = @Id";
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", entity.Id, DbType.Int32);
+            parameters.Add("Name", entity.Name, DbType.String);
+            parameters.Add("Price", entity.Price, DbType.String);
+            parameters.Add("Quantity", entity.Quantity, DbType.String);
+            using (var conn = _connectionFactory.GetConnection)
             {
-                var query = "UPDATE Products SET Name = @Name, Price = @Price, Quantity = @ Quantity WHERE Id= @Id";
-                var parameters = new DynamicParameters();
-                parameters.Add("Id", item.Id, DbType.Int32);
-                parameters.Add("Name", item.Name, DbType.String);
-                parameters.Add("Price", item.Price, DbType.Currency);
-                parameters.Add("Quantity", item.Quantity, DbType.Int32);
-                {
-                    SqlMapper.Execute(connection, query, parameters);
-                }
-
+                SqlMapper.Execute(conn, query, parameters);
             }
-            
         }
     }
+ 
 }
