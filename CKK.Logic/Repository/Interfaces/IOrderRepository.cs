@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CKK.Logic.Repository.Interfaces
 {
-    public interface IOrderRepository : IRepository<OrderSummary>
+    public interface IOrderRepository : IRepository<Order>
     {
         Order GetOrderByCustomer(int Id);
     }

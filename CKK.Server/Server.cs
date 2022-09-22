@@ -1,7 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using CKK.Logic.Models;
-using CKK.Persistance.Models;
 using System.Text;
 using System.Text.Json;
 using System;
@@ -25,45 +24,54 @@ public class Server
 
     private byte[] buffer;
 
-    private ShoppingCart cart;
+    private Order cart;
 
-    private FileStore myStore;
-
-    private Queue<ShoppingCart> shops = new Queue<ShoppingCart>();
+    private Queue<Order> shops = new Queue<Order>();
 
 
     static void Main(string[] args)
     {
         Server server = new Server();
-        server.sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-        server.sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
-        Console.Write("Local Port No.: ");
-        server.epLocal = new IPEndPoint(IPAddress.Parse(GetLocalIP()), 11000);
-        server.sck.Bind(server.epLocal);
+        server.Startup();
 
+        while (true) 
+        {
+        }
+            
+        
 
+    }
 
+    public void Startup() 
+    {
+        
+        sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        try
+        {
+            
+            epLocal = new IPEndPoint(IPAddress.Parse(GetLocalIP()), 11000);
+            sck.Bind(epLocal);
 
-        Console.Write("\nRemote Port No.:");
-        server.epRemote = new IPEndPoint(IPAddress.Parse(GetLocalIP()), 11001);
-        server.sck.Connect(server.epRemote);
+            
+            epRemote = new IPEndPoint(IPAddress.Parse(GetLocalIP()), 11001);
+            sck.Connect(epRemote);
 
+            buffer = new byte[1500];
+            sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
 
-        server.buffer = new byte[1500];
-        server.sck.BeginReceiveFrom(server.buffer, 0, server.buffer.Length, SocketFlags.None, ref server.epRemote, new AsyncCallback(server.MessageCallBack), server.buffer);
+            System.Threading.Thread.Sleep(3700);
 
-        System.Threading.Thread.Sleep(5000);
+            Console.WriteLine("\nConnected Successfully");
 
-        Console.WriteLine("\nConnected Successfully");
+        }
+        catch (Exception ex) 
+        {
+            Console.WriteLine(ex.ToString());
+        }
+        
 
-
-
-
-        while (Console.ReadLine() != "done") ;
-
-        server.sck.Shutdown(SocketShutdown.Both);
-        server.sck.Close();
     }
 
 
@@ -80,6 +88,8 @@ public class Server
         }
         return "127.0.0.1";
     }
+
+   
     private void MessageCallBack(IAsyncResult aResult)
     {
         byte[] msg = null;
@@ -97,12 +107,14 @@ public class Server
                 {
                     var utf8Reader = new Utf8JsonReader(receivedData);
                     var json = (JsonElement)JsonSerializer.Deserialize<object>(ref utf8Reader);
-                    cart = json.ToObject<ShoppingCart>();
-                    msg = Encoding.Default.GetBytes($"Successfully added order to the Queue. There are :'{cart.ShoppingCartItems.Count}' orders ahead of you.");
+                    cart = json.ToObject<Order>();
+                    shops.Enqueue(cart);
+                    msg = Encoding.Default.GetBytes($"Successfully added order to the Queue. There are :'{shops.Count}' orders ahead of you.");
 
-                    Console.WriteLine("Received Data");
+                    SendMessage("Order Received");
 
                 }
+
                 catch
                 {
                     Console.WriteLine("Message Received but could not be read.");
@@ -115,7 +127,7 @@ public class Server
             buffer = new byte[1500];
             sck.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
             sck.Send(msg);
-            //SendTextMessage();
+            
         }
         catch (Exception exp)
         {
@@ -124,13 +136,14 @@ public class Server
 
     }
 
-    private void SendTextMessage()
+    private void SendMessage(string message)
     {
         ASCIIEncoding enc = new ASCIIEncoding();
         byte[] msg = new byte[1500];
-        Console.WriteLine("Please enter message");
+        
         msg = enc.GetBytes(Console.ReadLine());
         sck.Send(msg);
+        DateTime localDate = DateTime.Now;
     }
 
 

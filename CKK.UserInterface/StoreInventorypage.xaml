@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CKK.UserInterface"
         mc:Ignorable="d"
-        Title="StoreInventorypage" Height="700" Width="800">
+        Title="StoreInventorypage" Height="900" Width="800">
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -53,10 +53,10 @@
                     <StackPanel x:Name="searchtext" Orientation="Horizontal">
 
                         <TextBlock Text="Name: "/>
-                        <TextBox x:Name="nameBox" Text="{Binding Name}" MinWidth="175" IsReadOnly="True"/>
+                        <TextBox x:Name="nameBox" Text="{Binding Name}" MinWidth="200" IsReadOnly="True"/>
                         <TextBlock Text="  "/>
                         <TextBlock Text="ID: "/>
-                        <TextBlock Text="{Binding Id}"/>
+                        <TextBlock Text="{Binding Id}"  MinWidth="40"/>
 
                         <TextBlock Text="                      "/>
 
@@ -76,10 +76,10 @@
                     <StackPanel x:Name="storetext" Orientation="Horizontal">
 
                         <TextBlock Text="Name: "/>
-                        <TextBox x:Name="nameBox" Text="{Binding Name}" MinWidth="175" IsReadOnly="True"/>
+                        <TextBox x:Name="nameBox" Text="{Binding Name}" MinWidth="200" IsReadOnly="True"/>
                         <TextBlock Text="  "/>
                         <TextBlock Text="ID: "/>
-                        <TextBlock Text="{Binding Id}" MinWidth="20"/>
+                        <TextBlock Text="{Binding Id}" MinWidth="40"/>
 
                         <TextBlock Text="                    "/>
 
@@ -101,6 +101,7 @@
             <Button x:Name="editButton" Content="Edit" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="editButton_Click"/>
             <Button x:Name="quantitySortButton" Content="Sort By Quantity" Height="25" Width="95" Background="#FF684DEC" Foreground="White" Margin="10" Click="quantitySortButton_Click"/>
             <Button x:Name="priceSortButton" Content="Sort By Price" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="priceSortButton_Click"/>
+            <Button x:Name="nameSortButton" Content="Sort By Name" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="nameSortButton_Click"/>
 
         </StackPanel>
 
@@ -142,7 +143,7 @@
             <TextBox x:Name="editQuantitybox" MinHeight="25" MinWidth="100" Margin="10"/>
         </StackPanel>
 
-        <Button Grid.Column="1" Grid.Row="11" x:Name="saveButton" Content="Save" Height="25" Width="84" Background="#FF684DEC" Foreground="White" Margin="338,10,0,0" HorizontalAlignment="Left" Click="saveButton_Click" VerticalAlignment="Top"/>
+        <Button Grid.Column="1" Grid.Row="11" x:Name="saveButton" Content="Save" Height="25" Width="85" Background="#FF684DEC" Foreground="White" Margin="10" Click="saveButton_Click" VerticalAlignment="Top"/>
 
 
     </Grid>

@@ -1,5 +1,5 @@
 ﻿
-using CKK.Logic.Interfaces;
+
 using CKK.Logic.Models;
 using CKK.Logic.Repository.Interfaces;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 namespace CKK.Logic.Repository.Implementation
 {
-    public class DataStore : IStore
+    public class DataStore 
     {
         private readonly IProductRepository _ProductRepository;
         public DataStore(IProductRepository ProductRepository)

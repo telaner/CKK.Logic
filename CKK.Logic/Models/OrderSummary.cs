@@ -1,5 +1,4 @@
-﻿using CKK.Logic.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +8,15 @@ namespace CKK.Logic.Models
 {
     public class OrderSummary
     {
-        public IShoppingCart Cart;
+        //public IShoppingCart Cart;
 
-        public OrderSummary(Customer cust) 
-        {
-        }
+        //public OrderSummary(Customer cust)
+        //{
+        //}
 
-        public OrderSummary(IShoppingCart cart) 
-        {
-            Cart = cart;
-        }
+        //public OrderSummary(IShoppingCart cart)
+        //{
+        //    Cart = cart;
+        //}
     }
 }

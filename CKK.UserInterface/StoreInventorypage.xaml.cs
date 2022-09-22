@@ -32,14 +32,9 @@ namespace CKK.UserInterface
 
         public ObservableCollection<Product> _Items { get; private set; }
         public ObservableCollection<Product> Searchlist { get; private set; }
-        public ObservableCollection<Product> QuantityList { get; private set; }
-        public ObservableCollection<Product> Pricelist { get; private set; }
+        
 
-        public int StoreIdcounter = 0;
-
-
-
-       
+              
 
         public StoreInventorypage()
         {
@@ -50,7 +45,7 @@ namespace CKK.UserInterface
             UpdateBinding();
 
         }
-
+       
         private void UpdateBinding() 
         {
             var items = _Store.GetAll().ToList();
@@ -66,8 +61,6 @@ namespace CKK.UserInterface
 
 
             _Store.Add(newprod);
-
-
             
             UpdateBinding();
 
@@ -105,12 +98,14 @@ namespace CKK.UserInterface
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             Product newprod = new Product { Name = editNamebox.Text, Id = int.Parse(editIdbox.Text), Price = decimal.Parse(editPricebox.Text), Quantity = int.Parse(editQuantitybox.Text) };
-            _Items.Add(newprod);
+            _Store.Edit(newprod);
+
+            UpdateBinding();
+
             editNamebox.Clear();
             editIdbox.Clear();
             editPricebox.Clear();
             editQuantitybox.Clear();
-
 
         }
 
@@ -128,24 +123,20 @@ namespace CKK.UserInterface
 
         private void quantitySortButton_Click(object sender, RoutedEventArgs e)
         {
-            //StoreInventory.ItemsSource = "";
-            //_Store.GetAllProductsByQuantity(_Items);
-            //QuantityList = _Store.GetAllProductsByQuantity(_Items);
-            //_Items = QuantityList;
-            //StoreInventory.ItemsSource = _Items;
-
+            StoreInventory.ItemsSource = _Items.OrderBy(x => x.Quantity);
 
         }
 
         private void priceSortButton_Click(object sender, RoutedEventArgs e)
         {
-            //StoreInventory.ItemsSource = "";
-            //_Store.GetAllProductsByPrice(_Items);
-            //Pricelist = _Store.GetAllProductsByPrice(_Items);
-            //_Items = Pricelist;
-            //StoreInventory.ItemsSource = _Items;
+            StoreInventory.ItemsSource = _Items.OrderBy(x => x.Price);
 
 
+        }
+
+        private void nameSortButton_Click(object sender, RoutedEventArgs e)
+        {
+            StoreInventory.ItemsSource = _Items.OrderBy(x => x.Name);
         }
     }
 }

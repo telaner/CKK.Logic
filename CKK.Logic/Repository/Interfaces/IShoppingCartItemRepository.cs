@@ -15,5 +15,6 @@ namespace CKK.Logic.Repository.Interfaces
         public ShoppingCartItem RemoveFromCart(int shoppingCartId,int itemId, int quantity=1);
         public decimal GetTotal(int ShoppingCartId);
         public List<ShoppingCartItem> GetProducts(int shoppingCartId);
+        public void Ordered(int shoppingCartId);
     }
 }

@@ -19,7 +19,7 @@ namespace CKK.Logic.Repository.Implementation
         {
             _connectionFactory = connectionFactory;
         }
-        public void Add(OrderSummary item)
+        public void Add(Order item)
         {
             using (var conn = _connectionFactory.GetConnection)
             {
@@ -28,11 +28,11 @@ namespace CKK.Logic.Repository.Implementation
             }
         }
 
-        public IEnumerable<OrderSummary> GetAll()
+        public IEnumerable<Order> GetAll()
         {
             using (var connection = _connectionFactory.GetConnection)
             {
-                return SqlMapper.Query<OrderSummary>(connection, $"SELECT * FROM {_tableName}");
+                return SqlMapper.Query<Order>(connection, $"SELECT * FROM {_tableName}");
             }
         }
 
@@ -47,7 +47,7 @@ namespace CKK.Logic.Repository.Implementation
             };
         }
 
-        public void Remove(OrderSummary item)
+        public void Remove(Order item)
         {
             using (var conn = _connectionFactory.GetConnection)
             {
@@ -55,7 +55,7 @@ namespace CKK.Logic.Repository.Implementation
             }
         }
 
-        public void Update(OrderSummary item)
+        public void Update(Order item)
         {
             using (var connection = _connectionFactory.GetConnection)
             {

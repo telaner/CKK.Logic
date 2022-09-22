@@ -28,6 +28,15 @@ namespace CKK.Logic.Repository.Implementation
                 SqlMapper.Execute(conn, "dbo.Product_Insert @Price, @Quantity, @Name", products);
             }
         }
+        public void Edit(Product entity)
+        {
+            using (var conn = _connectionFactory.GetConnection)
+            {
+                List<Product> products = new List<Product>();
+                products.Add(entity);
+                SqlMapper.Execute(conn, "dbo.Product_Edit @Price, @Quantity, @Name, @Id", products);
+            }
+        }
         public Product Find(int id)
         {
             using (var conn = _connectionFactory.GetConnection)

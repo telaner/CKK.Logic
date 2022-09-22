@@ -34,13 +34,13 @@ namespace CKK.Logic.Repository.Implementation
                 shopitem.Quantity = quantity;
                 shopitem.CustomerId = 1;
                 shopitem.ShoppingCartId = 1;
-                List<ShoppingCartItem> items = new List<ShoppingCartItem>();
-                items.Add(shopitem);
-                SqlMapper.Execute(conn, "dbo.ShoppingCart_Insert @ShoppingCartId, @CustomerId, @ProductId, @Quantity", items);
+                
                 if (item.Quantity >= quantity) 
                 {
-                    item.Quantity = item.Quantity - quantity;
-                    _productRepository.Update(item);
+                    List<ShoppingCartItem> items = new List<ShoppingCartItem>();
+                    items.Add(shopitem);
+                    SqlMapper.Execute(conn, "dbo.ShoppingCart_Insert @ShoppingCartId, @CustomerId, @ProductId, @Quantity", items);
+
                 }
                 
                 return shopitem;
@@ -60,13 +60,12 @@ namespace CKK.Logic.Repository.Implementation
                 shopitem.Quantity = quantity;
                 shopitem.ShoppingCartId = 1;
                 shopitem.CustomerId=1;
-                List<ShoppingCartItem> items = new List<ShoppingCartItem>();
-                items.Add(shopitem);
-                SqlMapper.Execute(conn, "dbo.ShoppingCart_Insert @ShoppingCartId, @CustomerId, @ProductId, @Quantity", items);
+                
                 if (item.Quantity >= quantity)
                 {
-                    item.Quantity = item.Quantity - quantity;
-                    _productRepository.Update(item);
+                    List<ShoppingCartItem> items = new List<ShoppingCartItem>();
+                    items.Add(shopitem);
+                    SqlMapper.Execute(conn, "dbo.ShoppingCart_Insert @ShoppingCartId, @CustomerId, @ProductId, @Quantity", items);
                 }
                 return shopitem;
             }
@@ -118,17 +117,15 @@ namespace CKK.Logic.Repository.Implementation
                                where item.ProductId==itemId
                                select item;
                 var product = shopitem.FirstOrDefault();
-                var id = product.ProductId;
-                              
-
-
+                                          
 
                 if (product != null) 
                 {
 
-                    product.Quantity = product.Quantity - quantity;
-                    if (product.Quantity - quantity> 0) 
+                    
+                    if (product.Quantity - quantity > 0) 
                     {
+                        product.Quantity = product.Quantity - quantity;
                         SqlMapper.Query<ShoppingCartItem>(conn, $"dbo.ShoppingCarts_removeitem @ShoppingCartId, @Quantity, @ProductId", product);
                         
                     }
@@ -139,11 +136,16 @@ namespace CKK.Logic.Repository.Implementation
                     }
                 }
 
-                var returnitem = _productRepository.Find(id);
-                returnitem.Quantity = returnitem.Quantity + quantity;
-                _productRepository.Update(returnitem);
+                
                 return product;
 
+            }
+        }
+        public void Ordered(int shoppingCartId)
+        {
+            using (var conn = _connectionFactory.GetConnection)
+            {
+                SqlMapper.Query<ShoppingCartItem>(conn, $"dbo.ShoppingCarts_removeitem @ShoppingCartId", shoppingCartId);
             }
         }
     }

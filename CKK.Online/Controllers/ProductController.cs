@@ -4,6 +4,7 @@ using CKK.Logic.Repository.Interfaces;
 using CKK.Logic.Models;
 using CKK.Logic.Repository.Implementation;
 
+
 namespace CKK.Online.Controllers
 {
     public class ProductController : Controller
@@ -62,6 +63,19 @@ namespace CKK.Online.Controllers
             }
             
         }
+        public ActionResult Remove(int? Id)
+        {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+            var id = (Id ?? 0);
+            _shopitems.RemoveFromCart(1, id);
+
+            return RedirectToAction(nameof(Cart));
+
+        }
         public ActionResult Cart()
         {
 
@@ -77,15 +91,42 @@ namespace CKK.Online.Controllers
 
         public ActionResult Order(int cartId) 
         {
-            var carlist = _shopitems.GetProducts(1).ToList();
+            
+           var cartlist = _shopitems.GetProducts(cartId).ToList();
 
-            Order order = new Order
-            {
+           Order ordertemp = new Order
+           {
                 OrderID = 1,
-                ShoppingCartId = 1
-            };
-            return RedirectToAction("OrderComplete");
+                ShoppingCartId = cartId,
+                OrderNumber = "trob5" 
+           };
+           ClientConnection client= new ClientConnection(ordertemp);
+           string message = client.OrderProcess();
 
+            message = message.Trim('\0');
+
+            if (message != "Error, Could not process order")
+            {
+
+                foreach (var prod in cartlist)
+                {
+                    _order.Add(ordertemp);
+                    _shopitems.Ordered(ordertemp.ShoppingCartId);
+                    var prodId = prod.ProductId;
+                    var cartQty = prod.Quantity;
+                    var prodtemp = _products.Find(prodId);
+                    prodtemp.Quantity = prodtemp.Quantity - cartQty;
+                    _products.Update(prodtemp);
+                }
+            }
+            else
+            {
+                message = "Error, Could not process order. Please return to cart";
+            }
+
+
+
+            return RedirectToAction("OrderComplete");
         }
        
         public ActionResult OrderComplete(string message)
